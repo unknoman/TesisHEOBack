@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+// Hola profe XD
 namespace Negocio
 {
     public class loginNegocio
@@ -24,6 +24,9 @@ namespace Negocio
             usuario.Password = "xD";
             usuario.rolid = 1;
 
+
+
+     
           /*   var usuario = LoginMetodos.login(login);
             if (usuario == null)
             {
@@ -56,11 +59,10 @@ namespace Negocio
                 claims,
                 expires: DateTime.Now.AddDays(5),
                 signingCredentials: SigIn);
-            TokenJWT jwtObjeto = new TokenJWT();
-            jwtObjeto.tokenJWT = new JwtSecurityTokenHandler().WriteToken(token);
+             TokenJWT jwtObjeto = new TokenJWT();
+             jwtObjeto.tokenJWT = new JwtSecurityTokenHandler().WriteToken(token);
             return jwtObjeto;
-           
-        }
+        } 
 
 
     }
