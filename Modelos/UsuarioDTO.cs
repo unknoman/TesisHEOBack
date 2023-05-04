@@ -2,7 +2,7 @@
 
 namespace Modelos
 {
-    public partial class Usuario
+    public partial class UsuarioDTO
     {
         public int Idusuario { get; set; }
 

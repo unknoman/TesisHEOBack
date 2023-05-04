@@ -9,7 +9,9 @@ public partial class Servicio
 
     public string Servicio1 { get; set; } = null!;
 
-    public string? Descripcionservicio { get; set; }
+    public string? Bajada { get; set; }
+
+    public string? Subida { get; set; }
 
     public decimal Precio { get; set; }
 

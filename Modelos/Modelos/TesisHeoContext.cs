@@ -41,21 +41,15 @@ public partial class TesisHeoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=tesisHEO;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=TesisHEO;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cliente>(entity =>
         {
-            entity.HasKey(e => e.Idcliente).HasName("PK__CLIENTE__1EA344C2BB0417E7");
+            entity.HasKey(e => e.Idcliente).HasName("PK__CLIENTE__1EA344C27265D672");
 
-            entity.ToTable("CLIENTE");
-
-            entity.HasIndex(e => e.Idcliente, "CLIENTE_PK").IsUnique();
-
-            entity.HasIndex(e => e.Idservicio, "RELATION_24_FK");
-
-            entity.HasIndex(e => e.Idestadoc, "RELATION_324_FK");
+            entity.ToTable("CLIENTE", tb => tb.HasTrigger("crear_pago_cliente"));
 
             entity.Property(e => e.Idcliente).HasColumnName("IDCLIENTE");
             entity.Property(e => e.Apellido)
@@ -87,20 +81,18 @@ public partial class TesisHeoContext : DbContext
             entity.HasOne(d => d.IdestadocNavigation).WithMany(p => p.Clientes)
                 .HasForeignKey(d => d.Idestadoc)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CLIENTE__IDESTAD__35BCFE0A");
+                .HasConstraintName("FK__CLIENTE__IDESTAD__398D8EEE");
 
             entity.HasOne(d => d.IdservicioNavigation).WithMany(p => p.Clientes)
                 .HasForeignKey(d => d.Idservicio)
-                .HasConstraintName("FK__CLIENTE__IDSERVI__34C8D9D1");
+                .HasConstraintName("FK__CLIENTE__IDSERVI__3A81B327");
         });
 
         modelBuilder.Entity<Estadocliente>(entity =>
         {
-            entity.HasKey(e => e.Idestadoc).HasName("PK__ESTADOCL__EB96EBB9BB38188B");
+            entity.HasKey(e => e.Idestadoc).HasName("PK__ESTADOCL__EB96EBB905293913");
 
             entity.ToTable("ESTADOCLIENTE");
-
-            entity.HasIndex(e => e.Idestadoc, "ESTADOCLIENTE_PK").IsUnique();
 
             entity.Property(e => e.Idestadoc).HasColumnName("IDESTADOC");
             entity.Property(e => e.Estadocliente1)
@@ -111,11 +103,9 @@ public partial class TesisHeoContext : DbContext
 
         modelBuilder.Entity<Estadop>(entity =>
         {
-            entity.HasKey(e => e.Idestadop).HasName("PK__ESTADOP__EB96EB8AD9B97DD4");
+            entity.HasKey(e => e.Idestadop).HasName("PK__ESTADOP__EB96EB8ACE02E1DA");
 
             entity.ToTable("ESTADOP");
-
-            entity.HasIndex(e => e.Idestadop, "ESTADOP_PK").IsUnique();
 
             entity.Property(e => e.Idestadop).HasColumnName("IDESTADOP");
             entity.Property(e => e.Estadop1)
@@ -126,11 +116,9 @@ public partial class TesisHeoContext : DbContext
 
         modelBuilder.Entity<Estadoservicio>(entity =>
         {
-            entity.HasKey(e => e.Idestadoservicio).HasName("PK__ESTADOSE__6EE6C458334C26E0");
+            entity.HasKey(e => e.Idestadoservicio).HasName("PK__ESTADOSE__6EE6C45882F6FE03");
 
             entity.ToTable("ESTADOSERVICIO");
-
-            entity.HasIndex(e => e.Idestadoservicio, "ESTADOSERVICIO_PK").IsUnique();
 
             entity.Property(e => e.Idestadoservicio).HasColumnName("IDESTADOSERVICIO");
             entity.Property(e => e.Estadoservicio1)
@@ -141,11 +129,9 @@ public partial class TesisHeoContext : DbContext
 
         modelBuilder.Entity<Estadot>(entity =>
         {
-            entity.HasKey(e => e.Idestado).HasName("PK__ESTADOT__A93E12E27DCD818E");
+            entity.HasKey(e => e.Idestado).HasName("PK__ESTADOT__A93E12E270C1E267");
 
             entity.ToTable("ESTADOT");
-
-            entity.HasIndex(e => e.Idestado, "ESTADOT_PK").IsUnique();
 
             entity.Property(e => e.Idestado).HasColumnName("IDESTADO");
             entity.Property(e => e.Estadot1)
@@ -156,15 +142,9 @@ public partial class TesisHeoContext : DbContext
 
         modelBuilder.Entity<Pago>(entity =>
         {
-            entity.HasKey(e => e.Idfactura).HasName("PK__PAGO__F7D4C9C7584F79DC");
+            entity.HasKey(e => e.Idfactura).HasName("PK__PAGO__F7D4C9C7A803B0C4");
 
             entity.ToTable("PAGO");
-
-            entity.HasIndex(e => e.Idfactura, "PAGO_PK").IsUnique();
-
-            entity.HasIndex(e => e.Idcliente, "RELATION_55_FK");
-
-            entity.HasIndex(e => e.Idestadop, "RELATION_57_FK");
 
             entity.Property(e => e.Idfactura).HasColumnName("IDFACTURA");
             entity.Property(e => e.Fecha)
@@ -182,21 +162,19 @@ public partial class TesisHeoContext : DbContext
             entity.HasOne(d => d.IdclienteNavigation).WithMany(p => p.Pagos)
                 .HasForeignKey(d => d.Idcliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PAGO__IDCLIENTE__38996AB5");
+                .HasConstraintName("FK__PAGO__IDCLIENTE__3B75D760");
 
             entity.HasOne(d => d.IdestadopNavigation).WithMany(p => p.Pagos)
                 .HasForeignKey(d => d.Idestadop)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PAGO__IDESTADOP__398D8EEE");
+                .HasConstraintName("FK__PAGO__IDESTADOP__3C69FB99");
         });
 
         modelBuilder.Entity<Rol>(entity =>
         {
-            entity.HasKey(e => e.Idrol).HasName("PK__ROL__A686519E5F75AC9D");
+            entity.HasKey(e => e.Idrol).HasName("PK__ROL__A686519EEE569FE1");
 
             entity.ToTable("ROL");
-
-            entity.HasIndex(e => e.Idrol, "ROL_PK").IsUnique();
 
             entity.Property(e => e.Idrol).HasColumnName("IDROL");
             entity.Property(e => e.Rol1)
@@ -207,17 +185,15 @@ public partial class TesisHeoContext : DbContext
 
         modelBuilder.Entity<Servicio>(entity =>
         {
-            entity.HasKey(e => e.Idservicio).HasName("PK__SERVICIO__ED07F46E41EBD70F");
+            entity.HasKey(e => e.Idservicio).HasName("PK__SERVICIO__ED07F46EFC6D257B");
 
             entity.ToTable("SERVICIO");
 
-            entity.HasIndex(e => e.Idservicio, "SERVICIO_PK").IsUnique();
-
             entity.Property(e => e.Idservicio).HasColumnName("IDSERVICIO");
-            entity.Property(e => e.Descripcionservicio)
+            entity.Property(e => e.Bajada)
                 .HasMaxLength(200)
                 .IsUnicode(false)
-                .HasColumnName("DESCRIPCIONSERVICIO");
+                .HasColumnName("BAJADA");
             entity.Property(e => e.Precio)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("PRECIO");
@@ -225,23 +201,17 @@ public partial class TesisHeoContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("SERVICIO");
+            entity.Property(e => e.Subida)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("SUBIDA");
         });
 
         modelBuilder.Entity<Serviciotecnico>(entity =>
         {
-            entity.HasKey(e => e.Idproblemat).HasName("PK__SERVICIO__3EFB96B81E225849");
+            entity.HasKey(e => e.Idproblemat).HasName("PK__SERVICIO__3EFB96B8370A0955");
 
             entity.ToTable("SERVICIOTECNICO");
-
-            entity.HasIndex(e => e.Idtiposerviciot, "RELATION_261_FK");
-
-            entity.HasIndex(e => e.Idtecnico, "RELATION_65_FK");
-
-            entity.HasIndex(e => e.Idcliente, "RELATION_66_FK");
-
-            entity.HasIndex(e => e.Idestadoservicio, "RELATION_73_FK");
-
-            entity.HasIndex(e => e.Idproblemat, "SERVICIOTECNICO_PK").IsUnique();
 
             entity.Property(e => e.Idproblemat).HasColumnName("IDPROBLEMAT");
             entity.Property(e => e.Descripcionserviciot)
@@ -268,23 +238,19 @@ public partial class TesisHeoContext : DbContext
 
             entity.HasOne(d => d.IdtecnicoNavigation).WithMany(p => p.Serviciotecnicos)
                 .HasForeignKey(d => d.Idtecnico)
-                .HasConstraintName("FK__SERVICIOT__IDTEC__3C69FB99");
+                .HasConstraintName("FK__SERVICIOT__IDTEC__3F466844");
 
             entity.HasOne(d => d.IdtiposerviciotNavigation).WithMany(p => p.Serviciotecnicos)
                 .HasForeignKey(d => d.Idtiposerviciot)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SERVICIOT__IDTIP__3F466844");
+                .HasConstraintName("FK__SERVICIOT__IDTIP__403A8C7D");
         });
 
         modelBuilder.Entity<Tecnico>(entity =>
         {
-            entity.HasKey(e => e.Idtecnico).HasName("PK__TECNICO__1391A3838D26953B");
+            entity.HasKey(e => e.Idtecnico).HasName("PK__TECNICO__1391A3836181C596");
 
             entity.ToTable("TECNICO");
-
-            entity.HasIndex(e => e.Idestado, "RELATION_36_FK");
-
-            entity.HasIndex(e => e.Idtecnico, "TECNICO_PK").IsUnique();
 
             entity.Property(e => e.Idtecnico).HasColumnName("IDTECNICO");
             entity.Property(e => e.Apellidot)
@@ -305,16 +271,14 @@ public partial class TesisHeoContext : DbContext
             entity.HasOne(d => d.IdestadoNavigation).WithMany(p => p.Tecnicos)
                 .HasForeignKey(d => d.Idestado)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TECNICO__IDESTAD__31EC6D26");
+                .HasConstraintName("FK__TECNICO__IDESTAD__412EB0B6");
         });
 
         modelBuilder.Entity<Tiposervicio>(entity =>
         {
-            entity.HasKey(e => e.Idtiposerviciot).HasName("PK__TIPOSERV__EB88F98D823BE6B8");
+            entity.HasKey(e => e.Idtiposerviciot).HasName("PK__TIPOSERV__EB88F98D8E6AA5DA");
 
             entity.ToTable("TIPOSERVICIO");
-
-            entity.HasIndex(e => e.Idtiposerviciot, "TIPOSERVICIO_PK").IsUnique();
 
             entity.Property(e => e.Idtiposerviciot).HasColumnName("IDTIPOSERVICIOT");
             entity.Property(e => e.Tiposervicio1)
@@ -325,13 +289,9 @@ public partial class TesisHeoContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.Idusuario).HasName("PK__USUARIO__98242AA92436B154");
+            entity.HasKey(e => e.Idusuario).HasName("PK__USUARIO__98242AA9BDCCB4AF");
 
             entity.ToTable("USUARIO");
-
-            entity.HasIndex(e => e.Idrol, "RELATION_86_FK");
-
-            entity.HasIndex(e => e.Idusuario, "USUARIO_PK").IsUnique();
 
             entity.Property(e => e.Idusuario).HasColumnName("IDUSUARIO");
             entity.Property(e => e.Idrol).HasColumnName("IDROL");

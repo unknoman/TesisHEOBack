@@ -15,12 +15,12 @@ namespace TesisHEOBack.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost]
-        [Route("login")]
-        public dynamic Login(Usuario login)
-        {
+          [HttpPost]
+          [Route("login")]
+          public dynamic Login(UsuarioDTO login)
+          {
 
-            return loginNegocio.login(login, _configuration);
-        }
-    }
+              return loginNegocio.login(login, _configuration);
+          }
+    } 
 }
