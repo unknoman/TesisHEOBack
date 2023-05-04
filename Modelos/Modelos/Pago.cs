@@ -17,7 +17,13 @@ public partial class Pago
 
     public DateTime? Fechapagado { get; set; }
 
+    public int Idservicio { get; set; }
+
+    public decimal Preciototal { get; set; }
+
     public virtual Cliente IdclienteNavigation { get; set; } = null!;
 
     public virtual Estadop IdestadopNavigation { get; set; } = null!;
+
+    public virtual Servicio IdservicioNavigation { get; set; } = null!;
 }

@@ -7,7 +7,7 @@ public partial class Cliente
 {
     public int Idcliente { get; set; }
 
-    public int? Idservicio { get; set; }
+    public int Idservicio { get; set; }
 
     public string Nombre { get; set; } = null!;
 
@@ -25,7 +25,7 @@ public partial class Cliente
 
     public virtual Estadocliente IdestadocNavigation { get; set; } = null!;
 
-    public virtual Servicio? IdservicioNavigation { get; set; }
+    public virtual Servicio IdservicioNavigation { get; set; } = null!;
 
     public virtual ICollection<Pago> Pagos { get; set; } = new List<Pago>();
 

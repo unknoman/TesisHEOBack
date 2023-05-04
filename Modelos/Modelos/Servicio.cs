@@ -9,11 +9,13 @@ public partial class Servicio
 
     public string Servicio1 { get; set; } = null!;
 
-    public string? Bajada { get; set; }
-
-    public string? Subida { get; set; }
+    public string Subida { get; set; } = null!;
 
     public decimal Precio { get; set; }
 
+    public string Bajada { get; set; } = null!;
+
     public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
+
+    public virtual ICollection<Pago> Pagos { get; set; } = new List<Pago>();
 }
