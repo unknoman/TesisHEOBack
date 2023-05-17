@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using TesisHEOBack.Modelos;
 using Modelos.ModelosDTO;
+using Google.Type;
 
 namespace TesisHEOBack.Controllers
 {
@@ -14,7 +15,7 @@ namespace TesisHEOBack.Controllers
     {
         [HttpGet]
         [Route("ClientesList")]
-        public dynamic listarCliente()
+        public dynamic listarCliente(int numero = 0, int numero2 = 0, string? dato = null)
         {
 
 
@@ -29,9 +30,11 @@ namespace TesisHEOBack.Controllers
                 } 
             }  */
 
-            return ClienteNegocio.listarClientes();
+            return ClienteNegocio.listarClientes(numero, numero2, dato);
 
         }
+
+
 
 
         [HttpDelete]
@@ -43,7 +46,6 @@ namespace TesisHEOBack.Controllers
                 return ClienteNegocio.borrarCliente(id);
             else
                 return BadRequest("El cliente no se pudo borrar correctamente ya que no se ingresó un id");
-
         }
 
     }

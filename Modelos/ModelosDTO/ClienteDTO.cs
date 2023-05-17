@@ -23,5 +23,7 @@ namespace Modelos.ModelosDTO
         public int Idestadoc { get; set; }
 
         public string estadoCliente { get; set; } = null!;
+
+        public string servicio { get; set; } = null!;
     }
 }

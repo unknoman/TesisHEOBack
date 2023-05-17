@@ -32,15 +32,14 @@ namespace Negocio
           {
               return new
               {
-                  sucess = false,
-                  message = "Usuario o contraseñas incorrectas"
+                  sucess = false
               };
           } 
 
 
           var jwt = _configuration.GetSection("JwtSettings").Get<JwtModel>();
 
-          var claims = new[]
+          var claims = new[] 
           {
                   new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                   new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
