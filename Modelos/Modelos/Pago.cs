@@ -11,7 +11,7 @@ public partial class Pago
 
     public int Idestadop { get; set; }
 
-    public DateTime Fecha { get; set; }
+    public DateTime Fecha { get; set; } 
 
     public DateTime Fechavencimiento { get; set; }
 
