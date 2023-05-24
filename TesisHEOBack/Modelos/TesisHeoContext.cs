@@ -92,13 +92,6 @@ public partial class TesisHeoContext : DbContext
             entity.HasOne(d => d.IdservicioNavigation).WithMany(p => p.Clientes)
                 .HasForeignKey(d => d.Idservicio)
                 .HasConstraintName("FK__CLIENTE__IDSERVI__34C8D9D1");
-            //--------------delete oncascade 
-        /*    entity.HasMany(c => c.Pagos)
-                .WithOne(p => p.IdclienteNavigation)
-                .HasForeignKey(p => p.Idcliente)
-                .OnDelete(DeleteBehavior.Cascade); */
-
-
         });
 
         modelBuilder.Entity<Estadocliente>(entity =>

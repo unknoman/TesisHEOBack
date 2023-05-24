@@ -24,7 +24,7 @@ namespace Datos
                     Fechavencimiento = c.Fechavencimiento,
                     Fechapagado = c.Fechapagado,
                     Preciototal = c.Preciototal,
-                    servicio = c.IdservicioNavigation.Servicio1,
+                    servicio = c.Serviciop,
                     estado = c.IdestadopNavigation.Estadop1
 
                 }).ToList() ;

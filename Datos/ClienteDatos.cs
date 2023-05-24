@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Modelos.ModelosDTO;
 using System;
 using System.Collections.Generic;
@@ -221,7 +222,81 @@ namespace Datos
                             })
                             .ToList();
                         return clientes;
-                    } else
+                    }
+             else if (numero2 == 3)
+                {
+                    if (numero == 1)
+                    {
+                        clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato) && c.Idestadoc == 3)
+                            .Select(c => new ClienteDTO
+                            {
+                                Idcliente = c.Idcliente, // 
+                                Nombre = c.Nombre + " " + c.Apellido,
+                                Dnic = c.Dnic,
+                                Direccionc = c.Direccionc,
+                                Telefono = c.Telefono,
+                                Idestadoc = c.Idestadoc,
+                                estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                servicio = c.IdservicioNavigation.Servicio1
+                            })
+                            .ToList();
+                        return clientes;
+                    }
+                    else if (numero == 2)
+                    {
+                        clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato) && c.Idestadoc == 3)
+                            .Select(c => new ClienteDTO
+                            {
+                                Idcliente = c.Idcliente, // 
+                                Nombre = c.Nombre + " " + c.Apellido,
+                                Dnic = c.Dnic,
+                                Direccionc = c.Direccionc,
+                                Telefono = c.Telefono,
+                                Idestadoc = c.Idestadoc,
+                                estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                servicio = c.IdservicioNavigation.Servicio1
+                            })
+                            .ToList();
+                        return clientes;
+                    }
+                    else if (numero == 3)
+                    {
+                        clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato) && c.Idestadoc == 3)
+                            .Select(c => new ClienteDTO
+                            {
+                                Idcliente = c.Idcliente, // 
+                                Nombre = c.Nombre + " " + c.Apellido,
+                                Dnic = c.Dnic,
+                                Direccionc = c.Direccionc,
+                                Telefono = c.Telefono,
+                                Idestadoc = c.Idestadoc,
+                                estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                servicio = c.IdservicioNavigation.Servicio1
+                            })
+                            .ToList();
+                        return clientes;
+                    }
+                    else if (numero == 0 && string.IsNullOrEmpty(dato))
+                        clientes = db.Clientes.Where(c => c.Idestadoc == 3)
+                        .Select(c => new ClienteDTO
+                        {
+                            Idcliente = c.Idcliente, // 
+                            Nombre = c.Nombre + " " + c.Apellido,
+                            Dnic = c.Dnic,
+                            Direccionc = c.Direccionc,
+                            Telefono = c.Telefono,
+                            Idestadoc = c.Idestadoc,
+                            estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                            servicio = c.IdservicioNavigation.Servicio1
+                        })
+                        .ToList();
+                    return clientes;
+                }
+                else
+
+
+
+
                 {
                     return clientes;
                 }
@@ -238,14 +313,21 @@ namespace Datos
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                Cliente cliente = db.Clientes.Find(id);
+                var cliente = db.Clientes.Include(c => c.Pagos).FirstOrDefault(c => c.Idcliente == id);
                 if (cliente != null)
                 {
-                    db.Clientes.Remove(cliente);
-                    return "Cliente " + cliente.Nombre + " " + cliente.Apellido + " Eliminado exitosamente";
+                    bool puedeEliminar = cliente.Pagos.All(p => p.Idestadop == 2);
+                    if (puedeEliminar)
+                    {
+                        db.RemoveRange(cliente.Pagos); // Eliminar los pagos asociados al cliente
+                        db.Remove(cliente); // Eliminar el cliente
+                        db.SaveChanges();
+                        return true;
+                    }
+                    return false;
                 } else
                 {
-                    return "El cliente no se encontró en la base de datos";
+                    return false;
                 }
 
               }

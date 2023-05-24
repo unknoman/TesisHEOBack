@@ -17,8 +17,6 @@ namespace TesisHEOBack.Controllers
         [Route("pagosList")]
         public dynamic listarCliente(int id)
         {
-
-
             return pagoNegocio.listarPagos(id);
 
         }
