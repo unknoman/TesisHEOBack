@@ -15,7 +15,7 @@ namespace TesisHEOBack.Controllers
     {
         [HttpGet]
         [Route("ClientesList")]
-        public dynamic listarCliente(int numero = 0, int numero2 = 0, string? dato = null)
+        public dynamic listarCliente(int numero = 0, int numero2 = 0, int numero3 = 0, string? dato = null)
         {
 
 
@@ -30,11 +30,17 @@ namespace TesisHEOBack.Controllers
                 } 
             }  */
 
-            return ClienteNegocio.listarClientes(numero, numero2, dato);
+            return ClienteNegocio.listarClientes(numero, numero2, numero3, dato);
 
         }
 
 
+        [HttpPut]
+        [Route("ClientesCrear")]
+        public dynamic crearCliente(clienteCrearDTO clientec)
+        {
+            return ClienteNegocio.crearCliente(clientec);
+        }
 
 
         [HttpDelete]

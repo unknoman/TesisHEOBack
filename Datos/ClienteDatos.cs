@@ -13,7 +13,8 @@ namespace Datos
 {
     public static class ClienteDatos
     {
-        public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
+
+        public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, int numero3 = 0, string dato = "")
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
@@ -306,6 +307,34 @@ namespace Datos
 
             }
         
+        }
+
+
+        public static dynamic crearCliente(clienteCrearDTO clientec)
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                if(!String.IsNullOrEmpty(clientec.Nombre) || !String.IsNullOrEmpty(clientec.Apellido)  || !String.IsNullOrEmpty(clientec.Telefono) || !String.IsNullOrEmpty(clientec.Direccionc))
+                {
+                    Cliente cliente = new Cliente();
+                    cliente.Nombre = clientec.Nombre;
+                    cliente.Apellido = clientec.Apellido;
+                    cliente.Dnic = clientec.Dnic;
+                    cliente.Direccionc = clientec.Direccionc;
+                    cliente.Telefono = clientec.Telefono;
+                    cliente.Idservicio = null;
+                    cliente.Idestadoc = 1;
+                    cliente.Pagopendiente = 0;
+
+                    db.Add(cliente);
+                    db.SaveChanges();
+                    return true;
+                } else
+                {
+                    return false;
+                }
+
+            }
         }
 
 
