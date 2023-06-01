@@ -55,6 +55,30 @@ namespace Datos
         }
 
 
+        public static dynamic actualizarPlan(servicioDTO plan)
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                Servicio servicio = db.Servicios.FirstOrDefault(u => u.Idservicio == plan.Idservicio);
+                if (!String.IsNullOrEmpty(plan.Servicio1) && plan.Idservicio != 0)
+                {
+                    servicio.Servicio1 = plan.Servicio1;
+                    servicio.Precio = plan.Precio;
+                    servicio.Bajada = plan.Bajada;
+                    servicio.Subida = plan.Subida;
+                    db.Update(servicio);
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+        }
+
+
 
         public static dynamic crearPlan(servicioDTO plan)
         {

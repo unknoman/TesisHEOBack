@@ -7,7 +7,7 @@ public partial class Cliente
 {
     public int Idcliente { get; set; }
 
-    public int? Idservicio { get; set; }
+    public int? Idservicio { get; set; } = null;
 
     public string Nombre { get; set; } = null!;
 

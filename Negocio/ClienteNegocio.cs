@@ -17,6 +17,10 @@ namespace Negocio
             return ClienteDatos.listarClientes(numero, numero2, numero3, dato);
         }
 
+        public static dynamic modificarCliente(clienteCrearDTO clientec)
+        {
+            return ClienteDatos.modificarCliente(clientec);
+        }
 
         public static dynamic crearCliente(clienteCrearDTO clientec)
         {

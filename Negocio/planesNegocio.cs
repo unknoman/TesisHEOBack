@@ -21,8 +21,11 @@ namespace Negocio
             return planesDatos.eliminarPlan(id);
         }
 
-
-        public static dynamic crearPlan(servicioDTO plan)
+        public static dynamic actualizarPlan(servicioDTO plan)
+        {
+            return planesDatos.actualizarPlan(plan);
+        }
+            public static dynamic crearPlan(servicioDTO plan)
         {
             if(!String.IsNullOrEmpty(plan.Servicio1.ToString()) && !String.IsNullOrEmpty(plan.Bajada) && !String.IsNullOrEmpty(plan.Subida) && plan.Idservicio == 0)
             {

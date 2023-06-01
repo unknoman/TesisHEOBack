@@ -15,5 +15,16 @@ namespace Negocio
         {
          return pagoDatos.listarPagos(id);
         }
-    }
+
+        public static dynamic listarEstadoPagos()
+        {
+            return pagoDatos.listarEstadoPagos();
+        }
+
+        public static dynamic cambiarEstadoP(pagoUpdateDTO pago)
+        {
+            return pagoDatos.cambiarEstadoP(pago);
+        }
+
+        }
 }

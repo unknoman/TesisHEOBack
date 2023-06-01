@@ -62,7 +62,7 @@ namespace Negocio
            jwtObjeto.tokenJWT = new JwtSecurityTokenHandler().WriteToken(token);
           return jwtObjeto;
       } 
-
+        
       
     } 
           

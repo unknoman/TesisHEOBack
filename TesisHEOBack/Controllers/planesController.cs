@@ -6,6 +6,7 @@ using System.Text.Json;
 using TesisHEOBack.Modelos;
 using Modelos.ModelosDTO;
 using Google.Type;
+using Datos;
 
 namespace TesisHEOBack.Controllers
 {
@@ -46,6 +47,13 @@ namespace TesisHEOBack.Controllers
         }
 
 
+        [HttpPatch]
+        [Route("actualizarPlan")]
+        public dynamic actualizarPlan(servicioDTO plan)
+        {
+            return planesNegocio.actualizarPlan(plan);
+        }
+       
 
     }
 }

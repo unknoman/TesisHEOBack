@@ -6,6 +6,7 @@ using System.Text.Json;
 using TesisHEOBack.Modelos;
 using Modelos.ModelosDTO;
 using Google.Type;
+using Datos;
 
 namespace TesisHEOBack.Controllers
 {
@@ -40,6 +41,13 @@ namespace TesisHEOBack.Controllers
         public dynamic crearCliente(clienteCrearDTO clientec)
         {
             return ClienteNegocio.crearCliente(clientec);
+        }
+
+        [HttpPatch]
+        [Route("ClientesModificar")]
+        public dynamic modificarCliente(clienteCrearDTO clientec)
+        {
+            return ClienteDatos.modificarCliente(clientec);
         }
 
 

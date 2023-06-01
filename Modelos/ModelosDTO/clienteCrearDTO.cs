@@ -8,6 +8,7 @@ namespace Modelos.ModelosDTO
 {
    public class clienteCrearDTO
     {
+        public int idCliente { get; set; } = 0 ;
         public string Nombre { get; set; } = null!;
 
         public string Apellido { get; set; } = null!;
@@ -18,7 +19,7 @@ namespace Modelos.ModelosDTO
 
         public string Direccionc { get; set; } = null!;
 
-        public int idServicio { get; set; } = 0;
+        public int? idServicio { get; set; } = null;
 
     }
 }

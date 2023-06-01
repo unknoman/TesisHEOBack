@@ -27,7 +27,8 @@ namespace Datos
                         .Select(c => new ClienteDTO
                         {
                             Idcliente = c.Idcliente, // 
-                            Nombre = c.Nombre + " " + c.Apellido,
+                            Nombre = c.Nombre,
+                            Apellido = c.Apellido,
                             Dnic = c.Dnic,
                             Direccionc = c.Direccionc,
                             Telefono = c.Telefono,
@@ -44,7 +45,8 @@ namespace Datos
                         .Select(c => new ClienteDTO
                         {
                             Idcliente = c.Idcliente, // 
-                            Nombre = c.Nombre + " " + c.Apellido,
+                            Nombre = c.Nombre,
+                            Apellido = c.Apellido,
                             Dnic = c.Dnic,
                             Direccionc = c.Direccionc,
                             Telefono = c.Telefono,
@@ -61,7 +63,8 @@ namespace Datos
                         .Select(c => new ClienteDTO
                         {
                             Idcliente = c.Idcliente, // 
-                            Nombre = c.Nombre + " " + c.Apellido,
+                            Nombre = c.Nombre,
+                            Apellido = c.Apellido,
                             Dnic = c.Dnic,
                             Direccionc = c.Direccionc,
                             Telefono = c.Telefono,
@@ -76,7 +79,8 @@ namespace Datos
                     .Select(c => new ClienteDTO
                     {
                        Idcliente = c.Idcliente, // 
-                 Nombre = c.Nombre + " " + c.Apellido,
+                 Nombre = c.Nombre,
+                 Apellido = c.Apellido,
                  Dnic = c.Dnic,
                  Direccionc = c.Direccionc,
                  Telefono = c.Telefono,
@@ -94,7 +98,8 @@ namespace Datos
                             .Select(c => new ClienteDTO
                             {
                                 Idcliente = c.Idcliente, // 
-                                Nombre = c.Nombre + " " + c.Apellido,
+                                Nombre = c.Nombre,
+                                Apellido = c.Apellido,
                                 Dnic = c.Dnic,
                                 Direccionc = c.Direccionc,
                                 Telefono = c.Telefono,
@@ -111,7 +116,8 @@ namespace Datos
                             .Select(c => new ClienteDTO
                             {
                                 Idcliente = c.Idcliente, // 
-                                Nombre = c.Nombre + " " + c.Apellido,
+                                Nombre = c.Nombre,
+                                Apellido = c.Apellido,
                                 Dnic = c.Dnic,
                                 Direccionc = c.Direccionc,
                                 Telefono = c.Telefono,
@@ -128,7 +134,8 @@ namespace Datos
                             .Select(c => new ClienteDTO
                             {
                                 Idcliente = c.Idcliente, // 
-                                Nombre = c.Nombre + " " + c.Apellido,
+                                Nombre = c.Nombre,
+                                Apellido = c.Apellido,
                                 Dnic = c.Dnic,
                                 Direccionc = c.Direccionc,
                                 Telefono = c.Telefono,
@@ -144,7 +151,8 @@ namespace Datos
                         .Select(c => new ClienteDTO
                         {
                             Idcliente = c.Idcliente, // 
-                            Nombre = c.Nombre + " " + c.Apellido,
+                            Nombre = c.Nombre,
+                            Apellido = c.Apellido,
                             Dnic = c.Dnic,
                             Direccionc = c.Direccionc,
                             Telefono = c.Telefono,
@@ -163,7 +171,8 @@ namespace Datos
                                 .Select(c => new ClienteDTO
                                 {
                                     Idcliente = c.Idcliente, // 
-                                    Nombre = c.Nombre + " " + c.Apellido,
+                                    Nombre = c.Nombre,
+                                    Apellido = c.Apellido,
                                     Dnic = c.Dnic,
                                     Direccionc = c.Direccionc,
                                     Telefono = c.Telefono,
@@ -180,7 +189,8 @@ namespace Datos
                                 .Select(c => new ClienteDTO
                                 {
                                     Idcliente = c.Idcliente, // 
-                                    Nombre = c.Nombre + " " + c.Apellido,
+                                    Nombre = c.Nombre,
+                                    Apellido = c.Apellido,
                                     Dnic = c.Dnic,
                                     Direccionc = c.Direccionc,
                                     Telefono = c.Telefono,
@@ -197,7 +207,8 @@ namespace Datos
                                 .Select(c => new ClienteDTO
                                 {
                                     Idcliente = c.Idcliente, // 
-                                    Nombre = c.Nombre + " " + c.Apellido,
+                                    Nombre = c.Nombre,
+                                    Apellido =  c.Apellido,
                                     Dnic = c.Dnic,
                                     Direccionc = c.Direccionc,
                                     Telefono = c.Telefono,
@@ -213,7 +224,8 @@ namespace Datos
                             .Select(c => new ClienteDTO
                             {
                                 Idcliente = c.Idcliente, // 
-                                Nombre = c.Nombre + " " + c.Apellido,
+                                Nombre = c.Nombre,
+                                Apellido = c.Apellido,
                                 Dnic = c.Dnic,
                                 Direccionc = c.Direccionc,
                                 Telefono = c.Telefono,
@@ -232,7 +244,8 @@ namespace Datos
                             .Select(c => new ClienteDTO
                             {
                                 Idcliente = c.Idcliente, // 
-                                Nombre = c.Nombre + " " + c.Apellido,
+                                Nombre = c.Nombre,
+                                Apellido = c.Apellido,
                                 Dnic = c.Dnic,
                                 Direccionc = c.Direccionc,
                                 Telefono = c.Telefono,
@@ -249,7 +262,8 @@ namespace Datos
                             .Select(c => new ClienteDTO
                             {
                                 Idcliente = c.Idcliente, // 
-                                Nombre = c.Nombre + " " + c.Apellido,
+                                Nombre = c.Nombre,
+                                Apellido = c.Apellido,
                                 Dnic = c.Dnic,
                                 Direccionc = c.Direccionc,
                                 Telefono = c.Telefono,
@@ -266,7 +280,8 @@ namespace Datos
                             .Select(c => new ClienteDTO
                             {
                                 Idcliente = c.Idcliente, // 
-                                Nombre = c.Nombre + " " + c.Apellido,
+                                Nombre = c.Nombre,
+                                Apellido = c.Apellido,
                                 Dnic = c.Dnic,
                                 Direccionc = c.Direccionc,
                                 Telefono = c.Telefono,
@@ -282,7 +297,8 @@ namespace Datos
                         .Select(c => new ClienteDTO
                         {
                             Idcliente = c.Idcliente, // 
-                            Nombre = c.Nombre + " " + c.Apellido,
+                            Nombre = c.Nombre,
+                            Apellido = c.Apellido,
                             Dnic = c.Dnic,
                             Direccionc = c.Direccionc,
                             Telefono = c.Telefono,
@@ -336,9 +352,35 @@ namespace Datos
 
             }
         }
+        public static dynamic modificarCliente(clienteCrearDTO clientec)
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                Cliente usuario = db.Clientes.FirstOrDefault(u => u.Idcliente == clientec.idCliente);
+                if (String.IsNullOrEmpty(usuario.Nombre))
+                {
+                    usuario.Nombre = clientec.Nombre;
+                    usuario.Apellido = clientec.Apellido;
+                    usuario.Dnic = clientec.Dnic;
+                    if (clientec.idServicio != null || clientec.idServicio != 0)
+                    {
+                        usuario.Idservicio = clientec.idServicio;
+                    }
+                    usuario.Telefono = clientec.Telefono;
+                    usuario.Direccionc = clientec.Direccionc;
+                    db.Update(usuario);
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                 
+            }
+        }
 
-
-        public static dynamic borrarClientes(int id)
+                public static dynamic borrarClientes(int id)
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {

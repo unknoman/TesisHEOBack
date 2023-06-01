@@ -6,6 +6,7 @@ using System.Text.Json;
 using TesisHEOBack.Modelos;
 using Modelos.ModelosDTO;
 using Google.Type;
+using Datos;
 
 namespace TesisHEOBack.Controllers
 {
@@ -20,8 +21,19 @@ namespace TesisHEOBack.Controllers
             return pagoNegocio.listarPagos(id);
 
         }
+        [HttpGet]
+        [Route("listarEstadoPagos")]
+        public dynamic listarEstadoPagos()
+        {
+            return pagoNegocio.listarEstadoPagos();
+        }
 
-
+        [HttpPatch]
+        [Route("cambiarEstadoPago")]
+        public dynamic cambiarEstadoP(pagoUpdateDTO pago)
+        {
+            return pagoNegocio.cambiarEstadoP(pago);
+        }
 
     }
 }
