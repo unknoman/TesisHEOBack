@@ -28,6 +28,7 @@ namespace Datos
                     Fechapagado = c.Fechapagado,
                     Preciototal = c.Preciototal,
                     servicio = c.Serviciop,
+                    idestadop = c.Idestadop,
                     estado = c.IdestadopNavigation.Estadop1
 
                 }).ToList() ;
@@ -50,6 +51,17 @@ namespace Datos
                 return EstadosP;
             }
         }
+        /* datos en la base de datos
+         * estadocliente
+     1 activo
+     2 suspendido
+     3 pendiente
+
+     estadop
+     1 pendiente
+     2 pagado
+     3 vencido
+         * */ 
         public static dynamic cambiarEstadoP(pagoUpdateDTO pago)
         {
             using (TesisHeoContext db = new TesisHeoContext())
@@ -58,23 +70,60 @@ namespace Datos
                 {
                     return false;
                 }
+
                 Pago pago1 = db.Pagos.FirstOrDefault(s => s.Idfactura == pago.Idfactura);
+
+                if (pago1 == null)
+                {
+                    return false;
+                }
 
                 pago1.Idestadop = pago.Idestado;
 
                 if (pago.Idestado != 2) // Estado diferente de "pagado"
                 {
                     pago1.Fechapagado = null; // Establecer la fecha de pago como null
-                } else if (pago.Idestado == 2)
+                }
+                else // Estado "pagado"
                 {
                     pago1.Fechapagado = DateTime.Now;
                 }
 
                 db.Update(pago1);
                 int valor = db.SaveChanges();
+
                 if (valor != 0)
                 {
-                    return true;
+                    int idCliente = pago1.Idcliente;
+                    bool clienteAlDia = !db.Pagos.Any(p => p.Idcliente == idCliente && p.Idestadop != 2);
+                    bool clienteSuspendido = db.Pagos.Any(p => p.Idcliente == idCliente && p.Idestadop == 3);
+
+                    Cliente cliente = db.Clientes.FirstOrDefault(c => c.Idcliente == idCliente);
+
+                    if (cliente != null)
+                    {
+                        if (clienteAlDia) // Todos los pagos están en estado "pagado"
+                        {
+                            cliente.Idestadoc = 1; // Cambiar el estado del cliente a "al día"
+                        }
+                        else if (clienteSuspendido) // Al menos un pago está en estado "vencido"
+                        {
+                            cliente.Idestadoc = 2; // Cambiar el estado del cliente a "suspendido"
+                        }
+                        else
+                        {
+                            cliente.Idestadoc = 3; // Cambiar el estado del cliente a "pendiente"
+                        }
+
+                        db.Update(cliente); // Actualizar la tabla Cliente
+                        db.SaveChanges();
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -82,6 +131,7 @@ namespace Datos
                 }
             }
         }
+
 
 
 

@@ -46,8 +46,8 @@ namespace Datos
                 if (id != 0)
                 {
                     var tecnico = db.Tecnicos.Include(c => c.Serviciotecnicos).FirstOrDefault(c => c.Idtecnico == id);
-                    db.RemoveRange(tecnico.Serviciotecnicos); // Eliminar los pagos asociados al cliente
-                    db.Remove(tecnico); // Eliminar el cliente
+                    db.RemoveRange(tecnico.Serviciotecnicos); 
+                    db.Remove(tecnico); 
                     db.SaveChanges();
                     return true;
                 } else

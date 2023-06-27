@@ -11,6 +11,7 @@ namespace Modelos.ModelosDTO
     public int Idtecnico { get; set; }
 
     public int Idestado { get; set; }
+   public string? estado { get; set; }
 
     public string Nombret { get; set; } = null!;
 

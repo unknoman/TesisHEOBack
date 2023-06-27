@@ -12,9 +12,9 @@ namespace Negocio
 {
     public static class ClienteNegocio
     {
-       public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, int numero3 = 0, string dato = "")
+       public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
         {
-            return ClienteDatos.listarClientes(numero, numero2, numero3, dato);
+            return ClienteDatos.listarClientes(numero, numero2, dato);
         }
 
         public static dynamic modificarCliente(clienteCrearDTO clientec)

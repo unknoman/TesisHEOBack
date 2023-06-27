@@ -8,6 +8,6 @@ namespace Modelos
 {
     public partial class TokenJWT
     {
-        public string tokenJWT { get; set; }
+        public string? tokenJWT { get; set; }
     }
 }

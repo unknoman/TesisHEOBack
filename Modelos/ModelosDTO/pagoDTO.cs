@@ -23,6 +23,8 @@ namespace Modelos.ModelosDTO
 
         public decimal Preciototal { get; set; }
 
+        public int idestadop { get; set; }
+
         public string? estado { get; set; }
     }
 }
