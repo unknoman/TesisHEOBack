@@ -98,7 +98,7 @@ namespace Datos
                     bool clienteAlDia = !db.Pagos.Any(p => p.Idcliente == idCliente && p.Idestadop != 2);
                     bool clienteSuspendido = db.Pagos.Any(p => p.Idcliente == idCliente && p.Idestadop == 3);
 
-                    Cliente cliente = db.Clientes.FirstOrDefault(c => c.Idcliente == idCliente);
+                    Cliente? cliente = db.Clientes.FirstOrDefault(c => c.Idcliente == idCliente);
 
                     if (cliente != null)
                     {

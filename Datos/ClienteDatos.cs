@@ -13,14 +13,23 @@ using TesisHEOBack.Modelos;
 
 namespace Datos
 {
-    public static class ClienteDatos
+    public  class ClienteDatos
     {
+        private readonly TesisHeoContext _dbContext;
+        public ClienteDatos(TesisHeoContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
-      public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
+
+
+
+     public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
               {
                   using (TesisHeoContext db = new TesisHeoContext())
                   {
                       List<ClienteDTO> clientes = new List<ClienteDTO>();
+                // Esto lo tengo que mejorar, lo hice con if para probar, pero lo podia hacer directamente con linq y mas simple
                       if (numero2 == 0)
                       {
                       if (numero == 1)
@@ -326,7 +335,6 @@ namespace Datos
                   }
 
               }
-
 
 
        
