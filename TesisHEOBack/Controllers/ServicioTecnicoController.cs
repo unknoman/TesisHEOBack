@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Datos.ServiciosDatos;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
+using Modelos.ModelosDTO;
 using Negocio;
 
 namespace TesisHEOBack.Controllers
@@ -19,6 +22,21 @@ namespace TesisHEOBack.Controllers
         public dynamic listarServicioT()
         {
             return _ServicioTNegocio.obtenerLista();
+        }
+
+        [HttpPut]
+        [Route("registrarCaso")]
+        public async Task<IActionResult> registrarCaso(ServicioTCrearDTO servicio)
+        {
+            try
+            {
+                await Task.Run(() => _ServicioTNegocio.crearServicioT(servicio));
+                return Ok("Se registró correctamente");
+            } catch (ExcepcionDatos ex)
+            {
+                return BadRequest(ex.Message);
+            }
+         
         }
 
     }

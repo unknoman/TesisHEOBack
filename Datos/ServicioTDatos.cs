@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Datos.ServiciosDatos;
+using Microsoft.EntityFrameworkCore;
 using Modelos.ModelosDTO;
 using System;
 using System.Collections.Generic;
@@ -37,13 +38,31 @@ namespace Datos
                 // Pendiente o solucionado
                 Idestadoservicio = x.Idestadoservicio,
 
-            }).ToList();
+            }).Where(x => x.Idestadoservicio == 1).ToList();
 
             return listaServicio;
         }
 
 
-
-        
+        public async Task<dynamic> crearServicioT(ServicioTCrearDTO servicioDTO)
+        {
+            try
+            {
+                Serviciotecnico servicio = new Serviciotecnico();
+                servicio.Idcliente = servicioDTO.Idcliente;
+                if (servicioDTO.Idtecnico != 0)
+                    servicio.Idtecnico = servicioDTO.Idtecnico;
+                servicio.Idestadoservicio = servicioDTO.Idestadoservicio;
+                servicio.Descripcionserviciot = servicioDTO.Descripcionserviciot;
+                servicio.Idtiposerviciot = servicioDTO.Idtiposerviciot;
+                servicio.Fechainicio = servicioDTO.Fechainicio;
+                _dbContexto.Add(servicio);
+                await _dbContexto.SaveChangesAsync();
+                return true;
+            } catch(ExcepcionDatos ex)
+            {
+               throw new ExcepcionDatos("Error", ex);
+            }
+        }
     }
 }

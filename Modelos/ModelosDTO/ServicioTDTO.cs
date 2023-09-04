@@ -26,7 +26,6 @@ namespace Modelos.ModelosDTO
 
         public string dnic { get; set; }
 
-
         public string? tecnico { get; set; } 
 
 
