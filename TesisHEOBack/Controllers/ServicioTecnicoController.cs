@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
+using Modelos.Modelos;
 using Modelos.ModelosDTO;
 using Negocio;
 
@@ -24,17 +25,43 @@ namespace TesisHEOBack.Controllers
             return _ServicioTNegocio.obtenerLista();
         }
 
+        [HttpPatch]
+        [Route("actualizarCaso")]
+        public async Task<dynamic> actualizarCaso(ServicioTCrearDTO servicio)
+        {
+            respuesta respuesta1 = new respuesta();
+            try
+            {
+                await Task.Run(() => _ServicioTNegocio.actualizarServicioT(servicio));
+                respuesta1.estadoRespuesta = true;
+                respuesta1.mensajeRespuesta = "El caso fue actualizado correctamente";
+                return respuesta1;
+            }
+            catch (ExcepcionDatos ex)
+            {
+                respuesta1.estadoRespuesta = false;
+                respuesta1.mensajeRespuesta = ex.Message;
+                return respuesta1;
+            }
+        }
+
+
         [HttpPut]
         [Route("registrarCaso")]
-        public async Task<IActionResult> registrarCaso(ServicioTCrearDTO servicio)
+        public async Task<dynamic> registrarCaso(ServicioTCrearDTO servicio)
         {
+           respuesta respuesta1 = new respuesta();
             try
             {
                 await Task.Run(() => _ServicioTNegocio.crearServicioT(servicio));
-                return Ok("Se registró correctamente");
+                respuesta1.estadoRespuesta = true;
+                respuesta1.mensajeRespuesta = "Se registró correctamente";
+                return respuesta1;
             } catch (ExcepcionDatos ex)
             {
-                return BadRequest(ex.Message);
+                respuesta1.estadoRespuesta =false;
+                respuesta1.mensajeRespuesta = ex.Message;
+                return respuesta1;
             }
          
         }

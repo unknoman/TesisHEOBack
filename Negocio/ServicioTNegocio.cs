@@ -25,18 +25,35 @@ namespace Negocio
             return listaServicioTDTO;
         }
 
+        public async Task<dynamic> actualizarServicioT(ServicioTCrearDTO servicio)
+        {
+            try
+            {
+                if (servicio.Idestadoservicio == 0)
+                throw new ExcepcionDatos("El idestadoservicio se encuentra vacio");
+                if(servicio.idcaso == 0)
+                throw new ExcepcionDatos("El idcaso se encuentra vacio");
+                return await _servicioDatos.actualizarServicioT(servicio);
+                
+            }
+            catch (ExcepcionDatos)
+            {
+                throw;
+            }
+        }
+
         public async Task<dynamic> crearServicioT(ServicioTCrearDTO servicio)
         {
+            try
+            {
             if (servicio.Idestadoservicio == 0)
                 throw new ExcepcionDatos("El idestadoservicio se encuentra vacio");
             if(servicio.Idcliente == 0)
                 throw new ExcepcionDatos("el Idcliente se encuentra vacio");
-            try
-            {
               return await _servicioDatos.crearServicioT(servicio);
-            } catch (ExcepcionDatos ex)
+            } catch (ExcepcionDatos)
             {
-                throw new ExcepcionDatos("Error", ex);
+                throw;
             }
         }
     }

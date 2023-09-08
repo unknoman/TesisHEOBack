@@ -9,7 +9,8 @@ namespace Modelos.ModelosDTO
 {
     public class ServicioTCrearDTO
     {
-            public int? Idtecnico { get; set; }
+            public int? idcaso { get; set; }
+            public int Idtecnico { get; set; }
 
             public int Idcliente { get; set; }
 

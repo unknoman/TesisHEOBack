@@ -12,6 +12,7 @@ namespace Modelos.ModelosDTO
 
         public int Idproblemat { get; set; }
 
+        public int idtecnico { get; set; }
         public int Idestadoservicio { get; set; }
 
         public int Idtiposerviciot { get; set; }
@@ -20,6 +21,7 @@ namespace Modelos.ModelosDTO
 
         public DateTime Fechainicio { get; set; }
 
+  
         public string clienteN { get; set; }
 
         public string clienteA { get; set; }

@@ -33,7 +33,8 @@ namespace Datos
                 clienteN = x.IdclienteNavigation.Nombre,
                 clienteA = x.IdclienteNavigation.Apellido,
                 dnic = x.IdclienteNavigation.Dnic,
-                Fechainicio = x.Fechainicio,    
+                Fechainicio = x.Fechainicio,   
+                Descripcionserviciot = x.Descripcionserviciot,
                 tecnico = x.IdtecnicoNavigation.Nombret + ' ' + x.IdtecnicoNavigation.Apellidot,
                 // Pendiente o solucionado
                 Idestadoservicio = x.Idestadoservicio,
@@ -43,6 +44,30 @@ namespace Datos
             return listaServicio;
         }
 
+        public async Task<dynamic> actualizarServicioT(ServicioTCrearDTO servicioT)
+        {
+            try
+            {
+                Serviciotecnico servicio = _dbContexto.Serviciotecnicos.FirstOrDefault(i => i.Idproblemat == servicioT.idcaso);
+                if (servicio != null)
+                {
+                    servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
+                    if (servicioT.Idtecnico != 0)
+                        servicio.Idtecnico = servicioT.Idtecnico;
+                    servicio.Idestadoservicio = servicioT.Idestadoservicio;
+                    servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
+                    _dbContexto.Update(servicio);
+                    await _dbContexto.SaveChangesAsync();
+                    return true;
+                }
+
+                throw new ExcepcionDatos("Error capa datos");
+            }
+            catch (ExcepcionDatos ex)
+            {
+                throw new ExcepcionDatos("Error capa datos: " + ex);
+            }
+        }
 
         public async Task<dynamic> crearServicioT(ServicioTCrearDTO servicioDTO)
         {
