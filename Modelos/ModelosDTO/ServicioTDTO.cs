@@ -21,7 +21,7 @@ namespace Modelos.ModelosDTO
 
         public DateTime Fechainicio { get; set; }
 
-  
+       public string direccion { get; set; }
         public string clienteN { get; set; }
 
         public string clienteA { get; set; }

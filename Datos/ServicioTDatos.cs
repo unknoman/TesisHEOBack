@@ -33,8 +33,9 @@ namespace Datos
                 clienteN = x.IdclienteNavigation.Nombre,
                 clienteA = x.IdclienteNavigation.Apellido,
                 dnic = x.IdclienteNavigation.Dnic,
-                Fechainicio = x.Fechainicio,   
+                Fechainicio = x.Fechainicio,
                 Descripcionserviciot = x.Descripcionserviciot,
+                direccion = _dbContexto.Clientes.Where(c => c.Idcliente == x.Idcliente).Select(c => c.Direccionc).First(),
                 tecnico = x.IdtecnicoNavigation.Nombret + ' ' + x.IdtecnicoNavigation.Apellidot,
                 // Pendiente o solucionado
                 Idestadoservicio = x.Idestadoservicio,
@@ -48,9 +49,35 @@ namespace Datos
         {
             try
             {
-                Serviciotecnico servicio = _dbContexto.Serviciotecnicos.FirstOrDefault(i => i.Idproblemat == servicioT.idcaso);
+                Serviciotecnico servicio = _dbContexto.Serviciotecnicos.First(i => i.Idproblemat == servicioT.idcaso);
                 if (servicio != null)
                 {
+                    Tecnico tecnico = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicio.Idtecnico);
+                    if (servicio.Idtecnico != servicioT.Idtecnico )
+                    {
+                        tecnico.Casosnum = tecnico.Casosnum - 1;
+                        Tecnico tecnico2 = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicioT.Idtecnico);
+                        tecnico2.Casosnum = tecnico2.Casosnum + 1;
+                        _dbContexto.Update(tecnico);
+                        _dbContexto.Update(tecnico2);
+                    }
+                    if (servicioT.Idestadoservicio == 2 && servicio.Idestadoservicio == 1 && tecnico.Casosnum > 0)
+                    {                
+                        tecnico.Casosnum = tecnico.Casosnum - 1;
+                        _dbContexto.Update(tecnico);
+                    }
+                    if (servicioT.Idestadoservicio == 1 && servicio.Idestadoservicio == 2 && tecnico.Casosnum > 0)
+                    {                     
+                        tecnico.Casosnum = tecnico.Casosnum + 1;
+                        _dbContexto.Update(tecnico);
+                    }
+                    if(servicioT.Idestadoservicio == 1 && servicio.Idestadoservicio == 2)
+                    {
+                        tecnico.Casosnum = tecnico.Casosnum + 1;
+                        _dbContexto.Update(tecnico);
+                    }
+
+
                     servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
                     if (servicioT.Idtecnico != 0)
                         servicio.Idtecnico = servicioT.Idtecnico;
@@ -81,6 +108,13 @@ namespace Datos
                 servicio.Descripcionserviciot = servicioDTO.Descripcionserviciot;
                 servicio.Idtiposerviciot = servicioDTO.Idtiposerviciot;
                 servicio.Fechainicio = servicioDTO.Fechainicio;
+                if (servicio.Idestadoservicio == 1)
+                {
+ 
+                    Tecnico tecnico = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicio.Idtecnico);
+                    tecnico.Casosnum = tecnico.Casosnum + 1; 
+                    _dbContexto.Update(tecnico);
+                }
                 _dbContexto.Add(servicio);
                 await _dbContexto.SaveChangesAsync();
                 return true;
