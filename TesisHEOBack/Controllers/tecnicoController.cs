@@ -42,8 +42,12 @@ namespace TesisHEOBack.Controllers
         {
             return tecnicoNegocio.eliminarTecnico(id);
         }
-
-
+        [HttpGet]
+        [Route("listarTecnicoDisponible")]
+        public dynamic listarTecnicosDisponibles()
+        {
+            return tecnicoNegocio.listarTecnicosDisponibles();
+        }
     }
 }
 

@@ -18,10 +18,10 @@ namespace Negocio
         _servicioDatos = servicioTDatos;
         }
 
-        public List<ServicioTDTO> obtenerLista()
+        public List<ServicioTDTO> obtenerLista(int estado)
         {
             List<ServicioTDTO> listaServicioTDTO = new List<ServicioTDTO>();
-            listaServicioTDTO = _servicioDatos.getServicioT();
+            listaServicioTDTO = _servicioDatos.getServicioT(estado);
             return listaServicioTDTO;
         }
 

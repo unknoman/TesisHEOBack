@@ -20,9 +20,9 @@ namespace TesisHEOBack.Controllers
 
         [HttpGet]
         [Route("listarServicioT")]
-        public dynamic listarServicioT()
+        public dynamic listarServicioT(int estado)
         {
-            return _ServicioTNegocio.obtenerLista();
+            return _ServicioTNegocio.obtenerLista(estado);
         }
 
         [HttpPatch]

@@ -23,7 +23,7 @@ namespace Datos
         // ----- Metodos datos ServicioT
 
 
-        public List<ServicioTDTO> getServicioT()
+        public List<ServicioTDTO> getServicioT(int estado)
         {
             List<ServicioTDTO> listaServicio = new List<ServicioTDTO>();
             listaServicio = _dbContexto.Serviciotecnicos.Select(x => new ServicioTDTO()
@@ -40,7 +40,7 @@ namespace Datos
                 // Pendiente o solucionado
                 Idestadoservicio = x.Idestadoservicio,
 
-            }).Where(x => x.Idestadoservicio == 1).ToList();
+            }).Where(x => x.Idestadoservicio == estado).ToList();
 
             return listaServicio;
         }
@@ -101,8 +101,7 @@ namespace Datos
             try
             {
                 Serviciotecnico servicio = new Serviciotecnico();
-                servicio.Idcliente = servicioDTO.Idcliente;
-                if (servicioDTO.Idtecnico != 0)
+                servicio.Idcliente = servicioDTO.Idcliente;              
                     servicio.Idtecnico = servicioDTO.Idtecnico;
                 servicio.Idestadoservicio = servicioDTO.Idestadoservicio;
                 servicio.Descripcionserviciot = servicioDTO.Descripcionserviciot;

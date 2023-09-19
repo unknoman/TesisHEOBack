@@ -92,6 +92,29 @@ namespace Datos
         }
 
 
+        public static List<tecnicoDTO> listarTecnicosDisponibles()
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                List<tecnicoDTO> tecnicos = new List<tecnicoDTO>();
+
+
+                tecnicos = db.Tecnicos.Select(c => new tecnicoDTO
+                {
+                    Idtecnico = c.Idtecnico,
+                    Nombret = c.Nombret,
+                    Apellidot = c.Apellidot,
+                    Casosnum = c.Casosnum,
+                    Telefonot = c.Telefonot
+                }).Where(c => c.Casosnum < 5)
+                .ToList();
+
+                return tecnicos;
+            }
+        }
+
     }
+
+
 }
 

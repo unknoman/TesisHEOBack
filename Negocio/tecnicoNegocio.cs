@@ -16,6 +16,13 @@ namespace Negocio
         }
 
 
+        public static dynamic listarTecnicosDisponibles()
+        {
+            return tecnicoDatos.listarTecnicosDisponibles();
+        }
+
+       
+
         public static dynamic crearTecnico(tecnicoDTO tecnico)
         {
             return tecnicoDatos.crearTecnico(tecnico);
