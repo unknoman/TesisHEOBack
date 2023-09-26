@@ -17,7 +17,7 @@ namespace Modelos.ModelosDTO
 
         public int Idtiposerviciot { get; set; }
 
-        public string Descripcionserviciot { get; set; }
+        public string? Descripcionserviciot { get; set; }
 
         public DateTime Fechainicio { get; set; }
 
