@@ -17,13 +17,14 @@ public partial class Cliente
 
     public decimal Pagopendiente { get; set; }
 
+    public decimal Instalado { get; set; }
+
     public int Idestadoc { get; set; }
 
     public string Direccionc { get; set; } = null!;
 
     public string Telefono { get; set; } = null!;
 
-    public int instalado { get; set; }
     public virtual Estadocliente IdestadocNavigation { get; set; } = null!;
 
     public virtual Servicio? IdservicioNavigation { get; set; }

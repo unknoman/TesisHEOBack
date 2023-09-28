@@ -362,6 +362,7 @@ namespace Datos
                     cliente.Idservicio = null;
                     cliente.Idestadoc = 1;
                     cliente.Pagopendiente = 0;
+                    cliente.Instalado = 0;
 
                     db.Add(cliente);
                     db.SaveChanges();
@@ -405,14 +406,15 @@ namespace Datos
               {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                var cliente = db.Clientes.Include(c => c.Pagos).FirstOrDefault(c => c.Idcliente == id);
+                var cliente = db.Clientes.Include(c => c.Pagos).Include(c=> c.Serviciotecnicos).FirstOrDefault(c => c.Idcliente == id);
                 if (cliente != null)
                 {
                     bool puedeEliminar = cliente.Pagos.All(p => p.Idestadop == 2 || cliente.Idestadoc != 3 && cliente.Idestadoc != 2);
                     if (puedeEliminar)
                     {
                         db.RemoveRange(cliente.Pagos);
-                        db.Remove(cliente); 
+                        db.RemoveRange(cliente.Serviciotecnicos);
+                        db.Remove(cliente);
                         db.SaveChanges();
                         return true;
                     }
