@@ -27,12 +27,12 @@ namespace TesisHEOBack.Controllers
 
         [HttpPatch]
         [Route("actualizarCaso")]
-        public async Task<dynamic> actualizarCaso(ServicioTCrearDTO servicio)
+        public dynamic actualizarCaso(ServicioTCrearDTO servicio)
         {
             respuesta respuesta1 = new respuesta();
             try
             {
-                await Task.Run(() => _ServicioTNegocio.actualizarServicioT(servicio));
+                 _ServicioTNegocio.actualizarServicioT(servicio);
                 respuesta1.estadoRespuesta = true;
                 respuesta1.mensajeRespuesta = "El caso fue actualizado correctamente";
                 return respuesta1;

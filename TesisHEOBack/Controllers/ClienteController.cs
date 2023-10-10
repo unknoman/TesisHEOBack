@@ -16,7 +16,7 @@ namespace TesisHEOBack.Controllers
     {
         [HttpGet]
         [Route("ClientesList")]
-        public dynamic listarCliente(int numero = 0, int numero2 = 0,  string? dato = null)
+        public dynamic listarCliente(int numero = 0, int numero2 = 0, string? dato = null)
         {
 
 
@@ -60,6 +60,14 @@ namespace TesisHEOBack.Controllers
                 return ClienteNegocio.borrarCliente(id);
             else
                 return BadRequest("El cliente no se pudo borrar correctamente ya que no se ingresó un id");
+        }
+
+
+        [HttpGet]
+        [Route("ClienteInstalarSimple")]
+        public dynamic listarClienteSimple(int estadoInstalado = 1)
+        {
+            return ClienteNegocio.listarClienteSimple(estadoInstalado);
         }
 
     }

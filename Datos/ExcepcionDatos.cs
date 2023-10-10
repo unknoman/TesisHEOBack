@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Datos.ServiciosDatos
 {
-   public class ExcepcionDatos : Exception
+    public class ExcepcionDatos : Exception
     {
         public ExcepcionDatos(string? message) : base(message)
         {

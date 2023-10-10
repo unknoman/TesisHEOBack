@@ -22,6 +22,23 @@ namespace Datos
         }
 
 
+        public static List<clienteSimpleListDTO> listarClienteSimple(int estadoInstalado)
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                List<clienteSimpleListDTO> lista = new List<clienteSimpleListDTO>();
+                lista = db.Clientes.Where(c => c.Instalado == estadoInstalado).Select(c => new clienteSimpleListDTO
+                {
+                    Idcliente = c.Idcliente,
+                    Nombre = c.Nombre,
+                    Apellido = c.Apellido,
+                    Pagopendiente = c.Pagopendiente,
+                    Instalado = c.Instalado,
+                    Dnic = c.Dnic
+                }).ToList();
+                return lista;
+            }
+        }
 
 
      public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")

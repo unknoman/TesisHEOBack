@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace TesisHEOBack.Modelos;
 
@@ -9,5 +10,6 @@ public partial class Rol
 
     public string? Rol1 { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 }

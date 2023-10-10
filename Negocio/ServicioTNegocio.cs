@@ -25,7 +25,7 @@ namespace Negocio
             return listaServicioTDTO;
         }
 
-        public async Task<dynamic> actualizarServicioT(ServicioTCrearDTO servicio)
+        public dynamic actualizarServicioT(ServicioTCrearDTO servicio)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace Negocio
                 throw new ExcepcionDatos("El idestadoservicio se encuentra vacio");
                 if(servicio.idcaso == 0)
                 throw new ExcepcionDatos("El idcaso se encuentra vacio");
-                return await _servicioDatos.actualizarServicioT(servicio);
+                return  _servicioDatos.actualizarServicioT(servicio);
                 
             }
             catch (ExcepcionDatos)

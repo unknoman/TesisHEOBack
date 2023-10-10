@@ -44,56 +44,70 @@ namespace Datos
 
             return listaServicio;
         }
+        private static readonly object _lock = new object();
 
-        public async Task<dynamic> actualizarServicioT(ServicioTCrearDTO servicioT)
+        public dynamic actualizarServicioT(ServicioTCrearDTO servicioT)
         {
-            try
+            lock (_lock)
             {
                 Serviciotecnico servicio = _dbContexto.Serviciotecnicos.First(i => i.Idproblemat == servicioT.idcaso);
-                if (servicio != null)
-                {
                     Tecnico tecnico = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicio.Idtecnico);
-                    if (servicio.Idtecnico != servicioT.Idtecnico )
-                    {
-                        tecnico.Casosnum = tecnico.Casosnum - 1;
-                        Tecnico tecnico2 = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicioT.Idtecnico);
-                        tecnico2.Casosnum = tecnico2.Casosnum + 1;
-                        _dbContexto.Update(tecnico);
-                        _dbContexto.Update(tecnico2);
-                    }
-                    if (servicioT.Idestadoservicio == 2 && servicio.Idestadoservicio == 1 && tecnico.Casosnum > 0)
-                    {                
-                        tecnico.Casosnum = tecnico.Casosnum - 1;
-                        _dbContexto.Update(tecnico);
-                    }
-                    if (servicioT.Idestadoservicio == 1 && servicio.Idestadoservicio == 2 && tecnico.Casosnum > 0)
-                    {                     
-                        tecnico.Casosnum = tecnico.Casosnum + 1;
-                        _dbContexto.Update(tecnico);
-                    }
-                    if(servicioT.Idestadoservicio == 1 && servicio.Idestadoservicio == 2)
-                    {
-                        tecnico.Casosnum = tecnico.Casosnum + 1;
-                        _dbContexto.Update(tecnico);
-                    }
+                    // aca se restan o se suman dependiendo si el tecnico tiene servicios tecnicos que atender nuevos o no 
+                   if (servicio.Idtecnico != servicioT.Idtecnico )
+                         {
+                             if(tecnico.Casosnum > 0)
+                             tecnico.Casosnum = tecnico.Casosnum - 1;
+                             Tecnico tecnico2 = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicioT.Idtecnico);
+                             tecnico2.Casosnum = tecnico2.Casosnum + 1;
+                             _dbContexto.Update(tecnico);
+                             _dbContexto.Update(tecnico2);
+                         }
+                         if (servicioT.Idestadoservicio == 2 && servicio.Idestadoservicio == 1 && tecnico.Casosnum > 0)
+                         {                
+                             tecnico.Casosnum = tecnico.Casosnum - 1;
+                             _dbContexto.Update(tecnico);
+                         }
+                         if (servicioT.Idestadoservicio == 1 && servicio.Idestadoservicio == 2 && tecnico.Casosnum > 0)
+                         {                     
+                             tecnico.Casosnum = tecnico.Casosnum + 1;
+                             _dbContexto.Update(tecnico);
+                         }
+                         if(servicioT.Idestadoservicio == 1 && servicio.Idestadoservicio == 2)
+                         {
+                             tecnico.Casosnum = tecnico.Casosnum + 1;
+                             _dbContexto.Update(tecnico);
+                         }
+                
+                    // si tipo de servicio es igual a instalacion y estado de servicio paso a solucionado el cliente se cambia a instalado
 
-
+     
                     servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
-                    if (servicioT.Idtecnico != 0)
-                        servicio.Idtecnico = servicioT.Idtecnico;
+                  if (servicioT.Idtecnico != 0)
+                        servicio.Idtecnico = servicioT.Idtecnico; 
                     servicio.Idestadoservicio = servicioT.Idestadoservicio;
                     servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
                     _dbContexto.Update(servicio);
-                    await _dbContexto.SaveChangesAsync();
-                    return true;
-                }
 
-                throw new ExcepcionDatos("Error capa datos");
+                Cliente cliente = _dbContexto.Clientes.First(c => c.Idcliente == servicio.Idcliente);
+                if (servicioT.Idtiposerviciot == 2 && servicio.Idestadoservicio == 2)
+                {
+                    cliente.Instalado = 1;
+                    _dbContexto.Update(cliente);
+
+                }
+                else if (servicioT.Idtiposerviciot == 2 && servicio.Idestadoservicio == 1)
+                {
+                    cliente.Instalado = 0;
+                    _dbContexto.Update(cliente);
+
+
+                }
+                _dbContexto.SaveChanges();
+                    
+                
             }
-            catch (ExcepcionDatos ex)
-            {
-                throw new ExcepcionDatos("Error capa datos: " + ex);
-            }
+
+            return true;
         }
 
         public async Task<dynamic> crearServicioT(ServicioTCrearDTO servicioDTO)

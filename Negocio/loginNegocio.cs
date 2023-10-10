@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Modelos;
+using Modelos.ModelosDTO;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,8 +23,8 @@ namespace Negocio
              Usuario usuario = new Usuario();
 
 
-          usuario.Usuario1 = login.Usuario1;
-          usuario.Password = login.Password;
+          usuario.Usuario1 = login.UsuarioDto;
+          usuario.Password = login.PasswordDto;
 
 
 

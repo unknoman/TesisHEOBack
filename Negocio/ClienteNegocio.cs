@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using TesisHEOBack.Modelos;
 
 namespace Negocio
 {
@@ -31,6 +32,15 @@ namespace Negocio
                 return ClienteDatos.borrarClientes(id);
             
    
+        }
+
+
+        public static List<clienteSimpleListDTO> listarClienteSimple(int estadoInstalado)
+        {
+
+
+            return ClienteDatos.listarClienteSimple(estadoInstalado);
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Modelos;
+using Modelos.ModelosDTO;
 using Negocio;
 
 namespace TesisHEOBack.Controllers
