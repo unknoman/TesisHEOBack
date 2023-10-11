@@ -14,6 +14,7 @@ namespace TesisHEOBack.Controllers
     public class UsuarioController : ControllerBase
     {
         respuesta respuesta1 = new respuesta();
+
         [HttpGet]
         [Route("listarUsuario")]
         public dynamic listarUsuario()
@@ -37,7 +38,7 @@ namespace TesisHEOBack.Controllers
                 } catch(ExcepcionDatos ex)
                 {
                     respuesta1.estadoRespuesta = false;
-                    respuesta1.mensajeRespuesta = ex.ToString();
+                    respuesta1.mensajeRespuesta = ex.Message;
                     return respuesta1;
                 }
 
@@ -58,7 +59,7 @@ namespace TesisHEOBack.Controllers
             } catch (ExcepcionDatos ex)
             {
                 respuesta1.estadoRespuesta = false;
-                respuesta1.mensajeRespuesta = ex.ToString();
+                respuesta1.mensajeRespuesta = ex.Message;
                 return respuesta1;
             }
         }
@@ -79,11 +80,22 @@ namespace TesisHEOBack.Controllers
                 catch (ExcepcionDatos ex)
                 {
                     respuesta1.estadoRespuesta = false;
-                    respuesta1.mensajeRespuesta = ex.ToString();
+                    respuesta1.mensajeRespuesta = ex.Message;
                     return respuesta1;
                 }
             }
 
+        // esto tiene que ir en la capa de datos pero por poco tiempo lo pongo aca
+        [HttpGet]
+        [Route("listarRoles")]
+        public dynamic listarRoles()
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                List<Rol> roles = db.Rols.ToList();
+                return roles;
+            }
+         }
 
         }
 

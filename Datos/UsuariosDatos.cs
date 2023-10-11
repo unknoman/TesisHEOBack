@@ -26,10 +26,10 @@ namespace Datos
                 {
 
                     Usuario usuario1 = new Usuario();
-                    usuario1.Usuario1 = usuario.UsuarioDto;
-                    usuario1.Password = usuario.PasswordDto;
+                    usuario1.Usuario1 = usuario.usuario1;
+                    usuario1.Password = usuario.password;
                     usuario1.Idrol = usuario.Idrol;
-                    int usuarioCheck = db.Usuarios.Where(x => x.Usuario1 == usuario.UsuarioDto).Count();
+                    int usuarioCheck = db.Usuarios.Where(x => x.Usuario1 == usuario.usuario1).Count();
                     if (usuarioCheck < 1)
                     {
                         db.Usuarios.Add(usuario1);
@@ -70,7 +70,7 @@ namespace Datos
                 try
                 {
 
-                    if (usuario.Idusuario != 0)
+                    if (usuario.Idusuario != 1)
                     {
                         Usuario usuario1 = new Usuario();
                         usuario1 = db.Usuarios.Where(c => c.Idusuario == usuario.Idusuario).FirstOrDefault();
@@ -102,7 +102,7 @@ namespace Datos
 
                     Usuario? usuario1 = new Usuario();
                     usuario1 = db.Usuarios.Where(u => u.Idusuario == id).FirstOrDefault();
-                    if (id != 0)
+                    if (id != 1)
                     {
                         if (usuario1 != null)
                         {

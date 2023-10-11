@@ -23,8 +23,8 @@ namespace Negocio
              Usuario usuario = new Usuario();
 
 
-          usuario.Usuario1 = login.UsuarioDto;
-          usuario.Password = login.PasswordDto;
+          usuario.Usuario1 = login.usuario1;
+          usuario.Password = login.password;
 
 
 

@@ -14,10 +14,10 @@ namespace Modelos.ModelosDTO
         public int Idrol { get; set; }
 
  
-        public string UsuarioDto { get; set; } = null!;
+        public string usuario1 { get; set; } = null!;
 
 
-        public string PasswordDto { get; set; } = null!;
+        public string password { get; set; } = null!;
 
     }
 }

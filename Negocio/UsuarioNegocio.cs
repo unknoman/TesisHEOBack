@@ -17,7 +17,7 @@ namespace Negocio
     {
         public static dynamic registrarUsuario(UsuarioDTO usuario)
         {
-            if (!string.IsNullOrEmpty(usuario.PasswordDto) && !string.IsNullOrEmpty(usuario.UsuarioDto) && usuario.Idrol != 0)
+            if (!string.IsNullOrEmpty(usuario.password) && !string.IsNullOrEmpty(usuario.usuario1) && usuario.Idrol != 0)
                 return UsuariosDatos.registrarUsuario(usuario);
             else
                 throw new ExcepcionDatos("Verifica los campos");
