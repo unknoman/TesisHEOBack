@@ -60,7 +60,7 @@ namespace Datos
                         if (pago.Fechavencimiento < pago.Fechapagado || pago.Fechapagado == null && pago.Idestadop != 3)
                         {
                             tienePagosVencidos = true;
-                            break; // No es necesario seguir verificando los pagos si ya encontramos uno vencido
+                            break; 
                         }
                     }
 
