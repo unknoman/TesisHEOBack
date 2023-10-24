@@ -451,7 +451,7 @@ namespace Datos
                                 {
                                     Idcliente = usuario.Idcliente,
                                     Idestadop = 1,
-                                    Fecha = DateTime.Now,
+                                    Fecha = DateTime.Now.Date,
                                     Fechavencimiento = DateTime.Now.AddDays(10),
                                     Serviciop = servicioActual.Servicio1,
                                     Preciototal = servicioActual.Precio 
