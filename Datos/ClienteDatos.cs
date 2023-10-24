@@ -27,6 +27,7 @@ namespace Datos
             using (TesisHeoContext db = new TesisHeoContext())
             {
                 List<clienteSimpleListDTO> lista = new List<clienteSimpleListDTO>();
+
                 lista = db.Clientes.Where(c => c.Instalado == estadoInstalado).Select(c => new clienteSimpleListDTO
                 {
                     Idcliente = c.Idcliente,
@@ -40,14 +41,50 @@ namespace Datos
             }
         }
 
+        public static void actualizarClientes()
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                // Obtengo la lista de los clientes originales con sus pagos
+                List<Cliente> clientesOriginales = db.Clientes.Include(c => c.Pagos).ToList();
 
-     public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
+
+
+                foreach (Cliente cliente in clientesOriginales)
+                {
+                    bool tienePagosVencidos = false;
+
+                    foreach (Pago pago in cliente.Pagos)
+                    {
+                        // Verificar si el pago está vencido
+                        if (pago.Fechavencimiento < pago.Fechapagado || pago.Fechapagado == null && pago.Idestadop != 3)
+                        {
+                            tienePagosVencidos = true;
+                            break; // No es necesario seguir verificando los pagos si ya encontramos uno vencido
+                        }
+                    }
+
+                    // Actualizar el estado del cliente si tiene pagos vencidos
+                    if (tienePagosVencidos)
+                    {
+                        cliente.Idestadoc = 2;
+                    }
+                }
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
+            }
+        }
+
+
+        public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
               {
                   using (TesisHeoContext db = new TesisHeoContext())
                   {
                       List<ClienteDTO> clientes = new List<ClienteDTO>();
+
                 // Esto lo tengo que mejorar, lo hice con if para probar, pero lo podia hacer directamente con linq y mas simple
-                      if (numero2 == 0)
+                if (numero2 == 0)
                       {
                       if (numero == 1)
                       {
@@ -353,17 +390,6 @@ namespace Datos
 
               }
 
-
-       
-
-    
-
-
-
-
-
-
-
         public static dynamic crearCliente(clienteCrearDTO clientec)
         {
             using (TesisHeoContext db = new TesisHeoContext())
@@ -395,19 +421,49 @@ namespace Datos
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                Cliente usuario = db.Clientes.FirstOrDefault(u => u.Idcliente == clientec.idCliente);
-                if (!String.IsNullOrEmpty(usuario.Nombre))
+                Cliente usuario = db.Clientes.Include(c => c.IdservicioNavigation).FirstOrDefault(u => u.Idcliente == clientec.idCliente);
+
+                if (usuario != null)
                 {
                     usuario.Nombre = clientec.Nombre;
                     usuario.Apellido = clientec.Apellido;
                     usuario.Dnic = clientec.Dnic;
-                    if (clientec.idServicio != null || clientec.idServicio != 0)
-                    {
-                        usuario.Idservicio = clientec.idServicio;
-                    }
                     usuario.Telefono = clientec.Telefono;
                     usuario.Direccionc = clientec.Direccionc;
-                    db.Update(usuario);
+
+                    if (clientec.idServicio != null && clientec.idServicio != 0)
+                    {
+                        int idServicioAnterior = usuario.Idservicio ?? 0; // Guarda el valor anterior
+                        usuario.Idservicio = clientec.idServicio;
+
+                        if (idServicioAnterior != clientec.idServicio)
+                        {
+                            // Obtener el nombre y precio del servicio actual
+                            Servicio servicioActual = db.Servicios.FirstOrDefault(s => s.Idservicio == clientec.idServicio);
+
+                            // Obtener el nombre y precio del servicio anterior
+                            Servicio servicioAnterior = db.Servicios.FirstOrDefault(s => s.Idservicio == idServicioAnterior);
+
+                            if (servicioActual != null && servicioAnterior != null)
+                            {
+                                // Insertar un nuevo registro en la tabla Pago
+                                Pago nuevoPago = new Pago
+                                {
+                                    Idcliente = usuario.Idcliente,
+                                    Idestadop = 1,
+                                    Fecha = DateTime.Now,
+                                    Fechavencimiento = DateTime.Now.AddDays(10),
+                                    Serviciop = servicioActual.Servicio1,
+                                    Preciototal = servicioActual.Precio 
+                                };
+                                db.Pagos.Add(nuevoPago);
+
+                                // Actualizar el estado del cliente a 3 (pendiente)
+                                usuario.Idestadoc = 3;
+                            }
+                        }
+                    }
+
                     db.SaveChanges();
                     return true;
                 }
@@ -415,11 +471,12 @@ namespace Datos
                 {
                     return false;
                 }
-                 
             }
         }
 
-                public static dynamic borrarClientes(int id)
+
+
+        public static dynamic borrarClientes(int id)
               {
             using (TesisHeoContext db = new TesisHeoContext())
             {
