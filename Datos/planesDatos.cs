@@ -35,16 +35,11 @@ namespace Datos
                 Servicio servicio = db.Servicios.Include(s => s.Clientes).FirstOrDefault(s => s.Idservicio == id);
                 if (servicio != null )
                 {
-                    if(servicio.Clientes.Any())
-                    {
-                        return false;
-                    } else
-                    {
+
                         servicio.Precio = 0;
                         db.Update(servicio);
                         db.SaveChanges();
                         return true;
-                    }
                 }
                 else
                 {
