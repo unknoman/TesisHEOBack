@@ -46,14 +46,14 @@ namespace Datos
                 if (id != 0)
                 {
                     var tecnico = db.Tecnicos.Include(c => c.Serviciotecnicos).FirstOrDefault(c => c.Idtecnico == id);
-                    db.RemoveRange(tecnico.Serviciotecnicos); 
-                    db.Remove(tecnico); 
-                    db.SaveChanges();
+                    tecnico.Idestado = 3;
+                    db.Update(tecnico);
+                   int valor = db.SaveChanges();
+                    if(valor >0)
                     return true;
-                } else
-                {
-                    return false;
                 }
+
+                return false;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Datos
 
                 if (numero == 0)
                 {
-                    query = query.Select(c=> c);
+                    query = query.Where(c=> c.Idestado != 3);
                 }
                 else if (numero == 1)
                 {
@@ -106,7 +106,7 @@ namespace Datos
                     Apellidot = c.Apellidot,
                     Casosnum = c.Casosnum,
                     Telefonot = c.Telefonot
-                }).Where(c => c.Casosnum < 5)
+                }).Where(c => c.Casosnum < 5 && c.Idtecnico != 0)
                 .ToList();
 
                 return tecnicos;

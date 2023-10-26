@@ -25,6 +25,7 @@ namespace Negocio
             return listaServicioTDTO;
         }
 
+
         public dynamic actualizarServicioT(ServicioTCrearDTO servicio)
         {
             try
@@ -40,6 +41,11 @@ namespace Negocio
             {
                 throw;
             }
+        }
+
+        public bool eliminarServicio(int id, int tipo)
+        {
+            return _servicioDatos.eliminarServicioT(id, tipo);
         }
 
         public async Task<dynamic> crearServicioT(ServicioTCrearDTO servicio)

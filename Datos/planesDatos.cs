@@ -23,7 +23,7 @@ namespace Datos
                     Bajada = c.Bajada,
                     Precio = c.Precio
 
-                }).ToList();
+                }).Where(p => p.Precio != 0).ToList();
                 return serviciosList;
             }
         }
@@ -40,7 +40,8 @@ namespace Datos
                         return false;
                     } else
                     {
-                        db.Servicios.Remove(servicio);
+                        servicio.Precio = 0;
+                        db.Update(servicio);
                         db.SaveChanges();
                         return true;
                     }

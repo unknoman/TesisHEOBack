@@ -66,5 +66,12 @@ namespace TesisHEOBack.Controllers
          
         }
 
+        [HttpDelete]
+        [Route("eliminarCaso")]
+        public bool eliminarServicio(int id, int tipo = 0)
+        {
+           return _ServicioTNegocio.eliminarServicio(id, tipo);
+        }
+
     }
 }

@@ -77,89 +77,18 @@ namespace Datos
         }
 
 
-        public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
-              {
-                  using (TesisHeoContext db = new TesisHeoContext())
+        /*    public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
                   {
-                      List<ClienteDTO> clientes = new List<ClienteDTO>();
+                      using (TesisHeoContext db = new TesisHeoContext())
+                      {
+                          List<ClienteDTO> clientes = new List<ClienteDTO>();
 
-                // Esto lo tengo que mejorar, lo hice con if para probar, pero lo podia hacer directamente con linq y mas simple
-                if (numero2 == 0)
-                      {
-                      if (numero == 1)
-                      {
-                          clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato))
-                              .Select(c => new ClienteDTO
-                              {
-                                  Idcliente = c.Idcliente, // 
-                                  Nombre = c.Nombre,
-                                  Apellido = c.Apellido,
-                                  Dnic = c.Dnic,
-                                  Direccionc = c.Direccionc,
-                                  Telefono = c.Telefono,
-                                  Idestadoc = c.Idestadoc,
-                                  estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                  servicio = c.IdservicioNavigation.Servicio1
-                              })
-                              .ToList();
-                          return clientes;
-                      }
-                      else if (numero == 2)
-                      {
-                          clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato))
-                              .Select(c => new ClienteDTO
-                              {
-                                  Idcliente = c.Idcliente, // 
-                                  Nombre = c.Nombre,
-                                  Apellido = c.Apellido,
-                                  Dnic = c.Dnic,
-                                  Direccionc = c.Direccionc,
-                                  Telefono = c.Telefono,
-                                  Idestadoc = c.Idestadoc,
-                                  estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                  servicio = c.IdservicioNavigation.Servicio1
-                              })
-                              .ToList();
-                          return clientes;
-                      }
-                      else if (numero == 3)
-                      {
-                          clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato))
-                              .Select(c => new ClienteDTO
-                              {
-                                  Idcliente = c.Idcliente, // 
-                                  Nombre = c.Nombre,
-                                  Apellido = c.Apellido,
-                                  Dnic = c.Dnic,
-                                  Direccionc = c.Direccionc,
-                                  Telefono = c.Telefono,
-                                  Idestadoc = c.Idestadoc,
-                                  estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                  servicio = c.IdservicioNavigation.Servicio1
-                              })
-                              .ToList();
-                          return clientes;
-                      } else if (numero == 0 && string.IsNullOrEmpty(dato))
-                          clientes = db.Clientes
-                          .Select(c => new ClienteDTO
+                    // Esto lo tengo que mejorar, lo hice con if para probar, pero lo podia hacer directamente con linq y mas simple
+                    if (numero2 == 0)
                           {
-                             Idcliente = c.Idcliente, // 
-                       Nombre = c.Nombre,
-                       Apellido = c.Apellido,
-                       Dnic = c.Dnic,
-                       Direccionc = c.Direccionc,
-                       Telefono = c.Telefono,
-                       Idestadoc = c.Idestadoc,
-                       estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                       servicio = c.IdservicioNavigation.Servicio1
-                        })
-                          .ToList();
-                      return clientes;
-                      } else if (numero2 == 1) // numero 2 filtro 
-                      {
                           if (numero == 1)
                           {
-                              clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato) && c.Idestadoc == 1)
+                              clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato))
                                   .Select(c => new ClienteDTO
                                   {
                                       Idcliente = c.Idcliente, // 
@@ -177,7 +106,7 @@ namespace Datos
                           }
                           else if (numero == 2)
                           {
-                              clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato) && c.Idestadoc == 1)
+                              clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato))
                                   .Select(c => new ClienteDTO
                                   {
                                       Idcliente = c.Idcliente, // 
@@ -195,7 +124,7 @@ namespace Datos
                           }
                           else if (numero == 3)
                           {
-                              clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato) && c.Idestadoc == 1)
+                              clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato))
                                   .Select(c => new ClienteDTO
                                   {
                                       Idcliente = c.Idcliente, // 
@@ -210,29 +139,27 @@ namespace Datos
                                   })
                                   .ToList();
                               return clientes;
-                          }
-                          else if (numero == 0 && string.IsNullOrEmpty(dato))
-                              clientes = db.Clientes.Where(c => c.Idestadoc == 1)
+                          } else if (numero == 0 && string.IsNullOrEmpty(dato))
+                              clientes = db.Clientes
                               .Select(c => new ClienteDTO
                               {
-                                  Idcliente = c.Idcliente, // 
-                                  Nombre = c.Nombre,
-                                  Apellido = c.Apellido,
-                                  Dnic = c.Dnic,
-                                  Direccionc = c.Direccionc,
-                                  Telefono = c.Telefono,
-                                  Idestadoc = c.Idestadoc,
-                                  estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                  servicio = c.IdservicioNavigation.Servicio1
-                              })
+                                 Idcliente = c.Idcliente, // 
+                           Nombre = c.Nombre,
+                           Apellido = c.Apellido,
+                           Dnic = c.Dnic,
+                           Direccionc = c.Direccionc,
+                           Telefono = c.Telefono,
+                           Idestadoc = c.Idestadoc,
+                           estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                           servicio = c.IdservicioNavigation.Servicio1
+                            })
                               .ToList();
                           return clientes;
-                      } 
-                          else if (numero2 == 2)
+                          } else if (numero2 == 1) // numero 2 filtro 
                           {
                               if (numero == 1)
                               {
-                                  clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato) && c.Idestadoc == 2)
+                                  clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato) && c.Idestadoc == 1)
                                       .Select(c => new ClienteDTO
                                       {
                                           Idcliente = c.Idcliente, // 
@@ -250,7 +177,7 @@ namespace Datos
                               }
                               else if (numero == 2)
                               {
-                                  clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato) && c.Idestadoc == 2)
+                                  clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato) && c.Idestadoc == 1)
                                       .Select(c => new ClienteDTO
                                       {
                                           Idcliente = c.Idcliente, // 
@@ -268,12 +195,12 @@ namespace Datos
                               }
                               else if (numero == 3)
                               {
-                                  clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato) && c.Idestadoc == 2)
+                                  clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato) && c.Idestadoc == 1)
                                       .Select(c => new ClienteDTO
                                       {
                                           Idcliente = c.Idcliente, // 
                                           Nombre = c.Nombre,
-                                          Apellido =  c.Apellido,
+                                          Apellido = c.Apellido,
                                           Dnic = c.Dnic,
                                           Direccionc = c.Direccionc,
                                           Telefono = c.Telefono,
@@ -285,7 +212,7 @@ namespace Datos
                                   return clientes;
                               }
                               else if (numero == 0 && string.IsNullOrEmpty(dato))
-                                  clientes = db.Clientes.Where(c => c.Idestadoc == 2)
+                                  clientes = db.Clientes.Where(c => c.Idestadoc == 1)
                                   .Select(c => new ClienteDTO
                                   {
                                       Idcliente = c.Idcliente, // 
@@ -300,95 +227,214 @@ namespace Datos
                                   })
                                   .ToList();
                               return clientes;
-                          }
-                   else if (numero2 == 3)
-                      {
-                          if (numero == 1)
-                          {
-                              clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato) && c.Idestadoc == 3)
-                                  .Select(c => new ClienteDTO
-                                  {
-                                      Idcliente = c.Idcliente, // 
-                                      Nombre = c.Nombre,
-                                      Apellido = c.Apellido,
-                                      Dnic = c.Dnic,
-                                      Direccionc = c.Direccionc,
-                                      Telefono = c.Telefono,
-                                      Idestadoc = c.Idestadoc,
-                                      estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                      servicio = c.IdservicioNavigation.Servicio1
-                                  })
-                                  .ToList();
-                              return clientes;
-                          }
-                          else if (numero == 2)
-                          {
-                              clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato) && c.Idestadoc == 3)
-                                  .Select(c => new ClienteDTO
-                                  {
-                                      Idcliente = c.Idcliente, // 
-                                      Nombre = c.Nombre,
-                                      Apellido = c.Apellido,
-                                      Dnic = c.Dnic,
-                                      Direccionc = c.Direccionc,
-                                      Telefono = c.Telefono,
-                                      Idestadoc = c.Idestadoc,
-                                      estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                      servicio = c.IdservicioNavigation.Servicio1
-                                  })
-                                  .ToList();
-                              return clientes;
-                          }
-                          else if (numero == 3)
-                          {
-                              clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato) && c.Idestadoc == 3)
-                                  .Select(c => new ClienteDTO
-                                  {
-                                      Idcliente = c.Idcliente, // 
-                                      Nombre = c.Nombre,
-                                      Apellido = c.Apellido,
-                                      Dnic = c.Dnic,
-                                      Direccionc = c.Direccionc,
-                                      Telefono = c.Telefono,
-                                      Idestadoc = c.Idestadoc,
-                                      estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                      servicio = c.IdservicioNavigation.Servicio1
-                                  })
-                                  .ToList();
-                              return clientes;
-                          }
-                          else if (numero == 0 && string.IsNullOrEmpty(dato))
-                              clientes = db.Clientes.Where(c => c.Idestadoc == 3)
-                              .Select(c => new ClienteDTO
+                          } 
+                              else if (numero2 == 2)
                               {
-                                  Idcliente = c.Idcliente, // 
-                                  Nombre = c.Nombre,
-                                  Apellido = c.Apellido,
-                                  Dnic = c.Dnic,
-                                  Direccionc = c.Direccionc,
-                                  Telefono = c.Telefono,
-                                  Idestadoc = c.Idestadoc,
-                                  estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                                  servicio = c.IdservicioNavigation.Servicio1
-                              })
-                              .ToList();
-                          return clientes;
+                                  if (numero == 1)
+                                  {
+                                      clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato) && c.Idestadoc == 2)
+                                          .Select(c => new ClienteDTO
+                                          {
+                                              Idcliente = c.Idcliente, // 
+                                              Nombre = c.Nombre,
+                                              Apellido = c.Apellido,
+                                              Dnic = c.Dnic,
+                                              Direccionc = c.Direccionc,
+                                              Telefono = c.Telefono,
+                                              Idestadoc = c.Idestadoc,
+                                              estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                              servicio = c.IdservicioNavigation.Servicio1
+                                          })
+                                          .ToList();
+                                      return clientes;
+                                  }
+                                  else if (numero == 2)
+                                  {
+                                      clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato) && c.Idestadoc == 2)
+                                          .Select(c => new ClienteDTO
+                                          {
+                                              Idcliente = c.Idcliente, // 
+                                              Nombre = c.Nombre,
+                                              Apellido = c.Apellido,
+                                              Dnic = c.Dnic,
+                                              Direccionc = c.Direccionc,
+                                              Telefono = c.Telefono,
+                                              Idestadoc = c.Idestadoc,
+                                              estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                              servicio = c.IdservicioNavigation.Servicio1
+                                          })
+                                          .ToList();
+                                      return clientes;
+                                  }
+                                  else if (numero == 3)
+                                  {
+                                      clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato) && c.Idestadoc == 2)
+                                          .Select(c => new ClienteDTO
+                                          {
+                                              Idcliente = c.Idcliente, // 
+                                              Nombre = c.Nombre,
+                                              Apellido =  c.Apellido,
+                                              Dnic = c.Dnic,
+                                              Direccionc = c.Direccionc,
+                                              Telefono = c.Telefono,
+                                              Idestadoc = c.Idestadoc,
+                                              estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                              servicio = c.IdservicioNavigation.Servicio1
+                                          })
+                                          .ToList();
+                                      return clientes;
+                                  }
+                                  else if (numero == 0 && string.IsNullOrEmpty(dato))
+                                      clientes = db.Clientes.Where(c => c.Idestadoc == 2)
+                                      .Select(c => new ClienteDTO
+                                      {
+                                          Idcliente = c.Idcliente, // 
+                                          Nombre = c.Nombre,
+                                          Apellido = c.Apellido,
+                                          Dnic = c.Dnic,
+                                          Direccionc = c.Direccionc,
+                                          Telefono = c.Telefono,
+                                          Idestadoc = c.Idestadoc,
+                                          estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                          servicio = c.IdservicioNavigation.Servicio1
+                                      })
+                                      .ToList();
+                                  return clientes;
+                              }
+                       else if (numero2 == 3)
+                          {
+                              if (numero == 1)
+                              {
+                                  clientes = db.Clientes.Where(c => c.Nombre.StartsWith(dato) && c.Idestadoc == 3)
+                                      .Select(c => new ClienteDTO
+                                      {
+                                          Idcliente = c.Idcliente, // 
+                                          Nombre = c.Nombre,
+                                          Apellido = c.Apellido,
+                                          Dnic = c.Dnic,
+                                          Direccionc = c.Direccionc,
+                                          Telefono = c.Telefono,
+                                          Idestadoc = c.Idestadoc,
+                                          estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                          servicio = c.IdservicioNavigation.Servicio1
+                                      })
+                                      .ToList();
+                                  return clientes;
+                              }
+                              else if (numero == 2)
+                              {
+                                  clientes = db.Clientes.Where(c => c.Apellido.StartsWith(dato) && c.Idestadoc == 3)
+                                      .Select(c => new ClienteDTO
+                                      {
+                                          Idcliente = c.Idcliente, // 
+                                          Nombre = c.Nombre,
+                                          Apellido = c.Apellido,
+                                          Dnic = c.Dnic,
+                                          Direccionc = c.Direccionc,
+                                          Telefono = c.Telefono,
+                                          Idestadoc = c.Idestadoc,
+                                          estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                          servicio = c.IdservicioNavigation.Servicio1
+                                      })
+                                      .ToList();
+                                  return clientes;
+                              }
+                              else if (numero == 3)
+                              {
+                                  clientes = db.Clientes.Where(c => c.Dnic.StartsWith(dato) && c.Idestadoc == 3)
+                                      .Select(c => new ClienteDTO
+                                      {
+                                          Idcliente = c.Idcliente, // 
+                                          Nombre = c.Nombre,
+                                          Apellido = c.Apellido,
+                                          Dnic = c.Dnic,
+                                          Direccionc = c.Direccionc,
+                                          Telefono = c.Telefono,
+                                          Idestadoc = c.Idestadoc,
+                                          estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                          servicio = c.IdservicioNavigation.Servicio1
+                                      })
+                                      .ToList();
+                                  return clientes;
+                              }
+                              else if (numero == 0 && string.IsNullOrEmpty(dato))
+                                  clientes = db.Clientes.Where(c => c.Idestadoc == 3)
+                                  .Select(c => new ClienteDTO
+                                  {
+                                      Idcliente = c.Idcliente, // 
+                                      Nombre = c.Nombre,
+                                      Apellido = c.Apellido,
+                                      Dnic = c.Dnic,
+                                      Direccionc = c.Direccionc,
+                                      Telefono = c.Telefono,
+                                      Idestadoc = c.Idestadoc,
+                                      estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                                      servicio = c.IdservicioNavigation.Servicio1
+                                  })
+                                  .ToList();
+                              return clientes;
+                          }
+                          else
+
+
+
+
+                          {
+                              return clientes;
+                          }
+
+
+
+
                       }
-                      else
+
+                  } */
 
 
+        public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                var query = db.Clientes.Select(c => new ClienteDTO
+                {
+                    Idcliente = c.Idcliente,
+                    Nombre = c.Nombre,
+                    Apellido = c.Apellido,
+                    Dnic = c.Dnic,
+                    Direccionc = c.Direccionc,
+                    Telefono = c.Telefono,
+                    Idestadoc = c.Idestadoc,
+                    estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                    servicio = c.IdservicioNavigation.Servicio1
+                }).Where(c => c.Idestadoc != 1001);
 
+                if (!string.IsNullOrEmpty(dato))
+                {
+                    switch (numero)
+                    {
+                        case 1:
+                            query = query.Where(c => c.Nombre.StartsWith(dato));
+                            break;
+                        case 2:
+                            query = query.Where(c => c.Apellido.StartsWith(dato));
+                            break;
+                        case 3:
+                            query = query.Where(c => c.Dnic.StartsWith(dato));
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
-                      {
-                          return clientes;
-                      }
+                if (numero2 > 0)
+                {
+                    query = query.Where(c => c.Idestadoc == numero2);
+                }
 
+                return query.ToList();
+            }
+        }
 
-
-
-                  }
-
-              }
 
         public static dynamic crearCliente(clienteCrearDTO clientec)
         {
@@ -483,12 +529,11 @@ namespace Datos
                 var cliente = db.Clientes.Include(c => c.Pagos).Include(c=> c.Serviciotecnicos).FirstOrDefault(c => c.Idcliente == id);
                 if (cliente != null)
                 {
-                    bool puedeEliminar = cliente.Pagos.All(p => p.Idestadop == 2 || cliente.Idestadoc != 3 && cliente.Idestadoc != 2);
+                    bool puedeEliminar = cliente.Pagos.All(p => p.Idestadop == 2);
                     if (puedeEliminar)
                     {
-                        db.RemoveRange(cliente.Pagos);
-                        db.RemoveRange(cliente.Serviciotecnicos);
-                        db.Remove(cliente);
+                        cliente.Idestadoc = 1001;
+                        db.Update(cliente);
                         db.SaveChanges();
                         return true;
                     }
