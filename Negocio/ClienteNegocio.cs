@@ -25,7 +25,14 @@ namespace Negocio
 
         public static dynamic crearCliente(clienteCrearDTO clientec)
         {
-            return ClienteDatos.crearCliente(clientec);
+           
+            if (ClienteDatos.obtenerDNICantidad(clientec) == 0)
+            {
+                return ClienteDatos.crearCliente(clientec); 
+            }
+            return false;
+
+
         }
             public static dynamic borrarCliente(int id)
         {

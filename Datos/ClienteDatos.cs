@@ -76,8 +76,8 @@ namespace Datos
             }
         }
 
-
-        /*    public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
+/*
+           public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
                   {
                       using (TesisHeoContext db = new TesisHeoContext())
                       {
@@ -388,10 +388,10 @@ namespace Datos
 
                       }
 
-                  } */
+                  } 
+*/
 
-
-        public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
+       public static List<ClienteDTO> listarClientes(int numero = 0, int numero2 = 0, string dato = "")
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
@@ -433,7 +433,7 @@ namespace Datos
 
                 return query.ToList();
             }
-        }
+        } 
 
 
         public static dynamic crearCliente(clienteCrearDTO clientec)
@@ -521,6 +521,13 @@ namespace Datos
         }
 
 
+        public static dynamic obtenerDNICantidad(clienteCrearDTO clientec)
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                return db.Clientes.Count(c => c.Dnic == clientec.Dnic);
+            }
+        }
 
         public static dynamic borrarClientes(int id)
               {

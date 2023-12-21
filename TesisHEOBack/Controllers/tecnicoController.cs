@@ -29,13 +29,35 @@ namespace TesisHEOBack.Controllers
         }
 
 
-      /*  [HttpPatch]
+        [HttpPatch]
         [Route("modificarTecnico")]
-        public dynamic modificarTecnico(Tecnico dto)
+        public dynamic modificarTecnico(tecnicoModificarDTO dto)
         {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                 if(string.IsNullOrEmpty(dto.Apellidot) || string.IsNullOrEmpty(dto.Nombret) || string.IsNullOrEmpty(dto.Telefonot) || dto.id == 0)
+                {
+                    return false;
+                }
+                 Tecnico tecnico = new Tecnico();
+                tecnico = db.Tecnicos.FirstOrDefault(t => t.Idtecnico == dto.id);
+                tecnico.Nombret = dto.Nombret;
+                tecnico.Apellidot = dto.Apellidot;
+                tecnico.Telefonot = dto.Telefonot;
+                try
+                {
+                  db.Update(tecnico);
+                  db.SaveChanges();
+                    return true;
+                } catch (Exception ex)
+                {
+                    return false;
+                }
             
+            }
+
         }
-       */
+       
 
 
 
