@@ -37,10 +37,35 @@ namespace Datos
                 Descripcionserviciot = x.Descripcionserviciot,
                 direccion = _dbContexto.Clientes.Where(c => c.Idcliente == x.Idcliente).Select(c => c.Direccionc).First(),
                 tecnico = x.IdtecnicoNavigation.Nombret + ' ' + x.IdtecnicoNavigation.Apellidot,
+                idtecnico = x.IdtecnicoNavigation.Idtecnico,
                 // Pendiente o solucionado
                 Idestadoservicio = x.Idestadoservicio,
 
-            }).Where(x => x.Idestadoservicio == estado).Where(s => s.Idestadoservicio != 3).ToList();
+            }).Where(x => x.Idestadoservicio == estado & x.Idtiposerviciot == 2).Where(s => s.Idestadoservicio != 3).ToList();
+
+            return listaServicio;
+        }
+
+
+        public List<ServicioTDTO> getServicioTR(int estado)
+        {
+            List<ServicioTDTO> listaServicio = new List<ServicioTDTO>();
+            listaServicio = _dbContexto.Serviciotecnicos.Select(x => new ServicioTDTO()
+            {
+                Idproblemat = x.Idproblemat,
+                Idtiposerviciot = x.Idtiposerviciot,
+                clienteN = x.IdclienteNavigation.Nombre,
+                clienteA = x.IdclienteNavigation.Apellido,
+                dnic = x.IdclienteNavigation.Dnic,
+                Fechainicio = x.Fechainicio,
+                Descripcionserviciot = x.Descripcionserviciot,
+                direccion = _dbContexto.Clientes.Where(c => c.Idcliente == x.Idcliente).Select(c => c.Direccionc).First(),
+                tecnico = x.IdtecnicoNavigation.Nombret + ' ' + x.IdtecnicoNavigation.Apellidot,
+                idtecnico = x.IdtecnicoNavigation.Idtecnico,
+                // Pendiente o solucionado
+                Idestadoservicio = x.Idestadoservicio,
+
+            }).Where(x => x.Idestadoservicio == estado & x.Idtiposerviciot == 1).Where(s => s.Idestadoservicio != 3).ToList();
 
             return listaServicio;
         }
@@ -48,15 +73,24 @@ namespace Datos
 
         public dynamic actualizarServicioT(ServicioTCrearDTO servicioT)
         {
+
             lock (_lock)
+             
             {
+                int bandera = 0;
+
                 Serviciotecnico servicio = _dbContexto.Serviciotecnicos.First(i => i.Idproblemat == servicioT.idcaso);
-                    Tecnico tecnico = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicio.Idtecnico);
-                    // aca se restan o se suman dependiendo si el tecnico tiene servicios tecnicos que atender nuevos o no 
-                   if (servicio.Idtecnico != servicioT.Idtecnico && servicio.Idestadoservicio != 2)
+                Tecnico tecnico = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicio.Idtecnico);
+                Cliente cliente = _dbContexto.Clientes.First(c => c.Idcliente == servicio.Idcliente);
+                // aca se restan o se suman dependiendo si el tecnico tiene servicios tecnicos que atender nuevos o no 
+                if (servicio.Idtecnico != servicioT.Idtecnico && servicio.Idestadoservicio != 2)
                          {
                              if(tecnico.Casosnum > 0)
-                             tecnico.Casosnum = tecnico.Casosnum - 1;
+                    {
+                        tecnico.Casosnum = tecnico.Casosnum - 1;
+                        bandera = 1;
+                    }
+
                              if(servicioT.Idestadoservicio != 2)
                               {
                                Tecnico tecnico2 = _dbContexto.Tecnicos.First(t => t.Idtecnico == servicioT.Idtecnico);
@@ -67,11 +101,19 @@ namespace Datos
               
                     
                          }
-                         if (servicioT.Idestadoservicio == 2 && servicio.Idestadoservicio == 1)
-                         {                
-                             tecnico.Casosnum = tecnico.Casosnum - 1;
-                             _dbContexto.Update(tecnico);
-                         }
+                        if (servicioT.Idestadoservicio == 2 && servicio.Idestadoservicio == 1 && bandera == 0)
+                         {        
+                           
+                          tecnico.Casosnum = tecnico.Casosnum - 1;
+                    servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
+                    servicio.Idtecnico = servicioT.Idtecnico;
+                    servicio.Idestadoservicio = servicioT.Idestadoservicio;
+                    servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
+                    cliente.Instalado = 1;
+                    _dbContexto.Update(tecnico);
+                          _dbContexto.SaveChanges();
+                          return true;
+                         } 
                          if (servicioT.Idestadoservicio == 1 && servicio.Idestadoservicio == 2)
                          {                     
                              tecnico.Casosnum = tecnico.Casosnum + 1;
@@ -87,7 +129,6 @@ namespace Datos
                     servicio.Descripcionserviciot = servicioT.Descripcionserviciot;
                     _dbContexto.Update(servicio);
 
-                Cliente cliente = _dbContexto.Clientes.First(c => c.Idcliente == servicio.Idcliente);
                 if (servicioT.Idtiposerviciot == 2 && servicio.Idestadoservicio == 2)
                 {
                     cliente.Instalado = 1;
@@ -152,8 +193,8 @@ namespace Datos
             try
             {
                 Serviciotecnico servicio = new Serviciotecnico();
-                servicio.Idcliente = servicioDTO.Idcliente;              
-                    servicio.Idtecnico = servicioDTO.Idtecnico;
+                servicio.Idcliente = servicioDTO.Idcliente;
+                servicio.Idtecnico = servicioDTO.Idtecnico;
                 servicio.Idestadoservicio = servicioDTO.Idestadoservicio;
                 servicio.Descripcionserviciot = servicioDTO.Descripcionserviciot;
                 servicio.Idtiposerviciot = servicioDTO.Idtiposerviciot;

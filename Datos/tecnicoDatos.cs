@@ -99,14 +99,15 @@ namespace Datos
                 List<tecnicoDTO> tecnicos = new List<tecnicoDTO>();
 
 
-                tecnicos = db.Tecnicos.Select(c => new tecnicoDTO
+                tecnicos = db.Tecnicos.Where(c => c.Casosnum < 5 && c.Idestado != 3).Select(c => new tecnicoDTO
                 {
                     Idtecnico = c.Idtecnico,
                     Nombret = c.Nombret,
                     Apellidot = c.Apellidot,
                     Casosnum = c.Casosnum,
-                    Telefonot = c.Telefonot
-                }).Where(c => c.Casosnum < 5 && c.Idtecnico != 0)
+                    Telefonot = c.Telefonot,
+                    tecnicoEstado = c.Idestado
+                })
                 .ToList();
 
                 return tecnicos;

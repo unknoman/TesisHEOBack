@@ -25,6 +25,15 @@ namespace TesisHEOBack.Controllers
             return _ServicioTNegocio.obtenerLista(estado);
         }
 
+
+
+        [HttpGet]
+        [Route("listarServicioTR")]
+        public dynamic getServicioTR(int estado)
+        {
+            return _ServicioTNegocio.getServicioTR(estado);
+        }
+
         [HttpPatch]
         [Route("actualizarCaso")]
         public dynamic actualizarCaso(ServicioTCrearDTO servicio)
@@ -72,6 +81,8 @@ namespace TesisHEOBack.Controllers
         {
            return _ServicioTNegocio.eliminarServicio(id, tipo);
         }
+
+
 
     }
 }

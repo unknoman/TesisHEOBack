@@ -26,6 +26,15 @@ namespace Negocio
         }
 
 
+       
+         public List<ServicioTDTO> getServicioTR(int estado)
+        {
+            List<ServicioTDTO> listaServicioTDTO = new List<ServicioTDTO>();
+            listaServicioTDTO = _servicioDatos.getServicioTR(estado);
+            return listaServicioTDTO;
+        }
+
+
         public dynamic actualizarServicioT(ServicioTCrearDTO servicio)
         {
             try

@@ -80,8 +80,21 @@ namespace TesisHEOBack.Controllers
         {
             return tecnicoNegocio.listarTecnicosDisponibles();
         }
-    }
+
+
+
+
+
+            // ... (resto del código)
+        }
+
 }
+
+
+
+
+
+   
 
 
 

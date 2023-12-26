@@ -28,7 +28,7 @@ namespace Datos
             {
                 List<clienteSimpleListDTO> lista = new List<clienteSimpleListDTO>();
 
-                lista = db.Clientes.Where(c => c.Instalado == estadoInstalado).Select(c => new clienteSimpleListDTO
+                lista = db.Clientes.Where(c => c.Instalado == estadoInstalado && c.Idestadoc != 1001).Select(c => new clienteSimpleListDTO
                 {
                     Idcliente = c.Idcliente,
                     Nombre = c.Nombre,
@@ -452,7 +452,7 @@ namespace Datos
                     cliente.Idestadoc = 1;
                     cliente.Pagopendiente = 0;
                     cliente.Instalado = 0;
-
+                    cliente.Idservicio = 1;
                     db.Add(cliente);
                     db.SaveChanges();
                     return true;

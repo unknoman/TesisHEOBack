@@ -21,5 +21,7 @@ namespace Modelos.ModelosDTO
 
     public string Telefonot { get; set; } = null!;
 
+    public int tecnicoEstado { get; set; }
+
 }
 }
