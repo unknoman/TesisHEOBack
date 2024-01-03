@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Modelos.ModelosDTO;
 using TesisHEOBack.Modelos;
 
 namespace TesisHEOBack.Controllers
@@ -45,18 +46,64 @@ namespace TesisHEOBack.Controllers
             }
         }
 
-
-        [HttpGet]
-        [Route("obtenerDatos")]
-        public Dictionary<string, int> getDatos()
+       
+              [HttpGet]
+              [Route("obtenerDatosPlanes")]
+        public List<EstadisticasDTO> GetDatosPlanes(DateTime fechaDesde, DateTime fechaHasta)
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                var Stats = db.Servicios.Include(s => s.Clientes)
-               .ToDictionary(s => s.Servicio1, s => s.Clientes.Count);
-                return Stats;
+                fechaDesde = fechaDesde.Date;
+                fechaHasta = fechaHasta.Date.AddDays(1).AddTicks(-1); // Asegurar que incluya todo el último día
+
+               
+                /* var stats =  db.Pagos
+                    .Where(p => p.Fechapagado >= fechaDesde && p.Fechapagado <= fechaHasta) // Filtrar por fechas
+                    .GroupBy(p => p.Serviciop)
+                    .Select(group => new EstadisticasDTO
+                    {
+                        name = group.Key, // Serviciop como name
+                        value = group.Count() // Contar la cantidad de pagos para el servicio
+                    })
+                    .ToList();*/
+
+                var stats = db.Servicios
+            .Select(servicio => new EstadisticasDTO
+            {
+                name = servicio.Servicio1, // Nombre del servicio
+                value = servicio.Clientes.Count(cliente => cliente.Idestadoc != 1001) // Cantidad de clientes para el servicio
+            })
+            .ToList();
+
+                return stats;
             }
         }
+
+
+
+        [HttpGet]
+        [Route("obtenerdatosTecnicos")]
+        public List<EstadisticasDTO> GetDatosTecnicos(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                fechaDesde = fechaDesde.Date;
+                fechaHasta = fechaHasta.Date.AddDays(1); // Asegurar que incluya todo el último día
+
+                var stats = db.Serviciotecnicos
+                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta) // Filtrar por fechas
+                    .GroupBy(p => new { p.Idtecnico, p.IdtecnicoNavigation.Nombret, p.IdtecnicoNavigation.Apellidot })
+                    .Select(group => new EstadisticasDTO
+                    {
+                        name = group.Key.Nombret + " " + group.Key.Apellidot + " ID:" + group.Key.Idtecnico, 
+                        value = group.Count() // Contar la cantidad de servicios técnicos para el técnico
+                    })
+                    .ToList();
+
+                return stats;
+            }
+        }
+
 
     }
 }
