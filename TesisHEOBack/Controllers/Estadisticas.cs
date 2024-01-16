@@ -67,7 +67,7 @@ namespace TesisHEOBack.Controllers
                     })
                     .ToList();*/
 
-                var stats = db.Servicios
+                var stats = db.Servicios.Where(servicio => servicio.Precio != 0)
             .Select(servicio => new EstadisticasDTO
             {
                 name = servicio.Servicio1, // Nombre del servicio
@@ -91,7 +91,7 @@ namespace TesisHEOBack.Controllers
                 fechaHasta = fechaHasta.Date.AddDays(1); // Asegurar que incluya todo el último día
 
                 var stats = db.Serviciotecnicos
-                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta) // Filtrar por fechas
+                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta && p.Idtiposerviciot == 2) // Filtrar por fechas
                     .GroupBy(p => new { p.Idtecnico, p.IdtecnicoNavigation.Nombret, p.IdtecnicoNavigation.Apellidot })
                     .Select(group => new EstadisticasDTO
                     {
@@ -105,5 +105,28 @@ namespace TesisHEOBack.Controllers
         }
 
 
+        [HttpGet]
+        [Route("obtenerEstadisticaDatos")]
+        public List<EstadisticasDTO> ObtenerEstadisticasPagos(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            fechaDesde = fechaDesde.Date;
+            fechaHasta = fechaHasta.Date.AddDays(1); // Asegurar que incluya todo el último día
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                var estadisticas = db.Pagos
+                .Where(p => p.Fecha >= fechaDesde && p.Fecha <= fechaHasta)
+                .GroupBy(p => p.IdestadopNavigation.Estadop1)
+                .Select(group => new EstadisticasDTO
+                {
+                    name = group.Key,
+                    value = group.Count()
+                })
+                .ToList();
+                return estadisticas;
+            }
+
+        }
     }
+
 }
+

@@ -33,7 +33,8 @@ namespace Datos
             using (TesisHeoContext db = new TesisHeoContext())
             {
                 Servicio servicio = db.Servicios.Include(s => s.Clientes).FirstOrDefault(s => s.Idservicio == id);
-                if (servicio != null )
+                
+                if (servicio != null && servicio.Clientes.Count < 1)
                 {
 
                         servicio.Precio = 0;
@@ -43,7 +44,7 @@ namespace Datos
                 }
                 else
                 {
-                    return "El servicio no se encontró en la base de datos";
+                    return false;
                 }
 
             }
