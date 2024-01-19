@@ -463,6 +463,8 @@ namespace Datos
 
             }
         }
+
+
         public static dynamic modificarCliente(clienteCrearDTO clientec)
         {
             using (TesisHeoContext db = new TesisHeoContext())
