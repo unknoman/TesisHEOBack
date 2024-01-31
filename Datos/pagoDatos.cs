@@ -20,7 +20,7 @@ namespace Datos
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                List<pagoDTO> pagosCliente = db.Pagos.Where(c => c.Idcliente == id).OrderByDescending(c => c.Fecha).Select(c => new pagoDTO
+                List<pagoDTO> pagosCliente = db.Pagos.Where(c => c.Idcliente == id).OrderByDescending(c => c.Idfactura).Select(c => new pagoDTO
                 {
                     Idfactura = c.Idfactura,
                     Fecha = c.Fecha,
