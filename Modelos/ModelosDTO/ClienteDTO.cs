@@ -27,5 +27,6 @@ namespace Modelos.ModelosDTO
         public string estadoCliente { get; set; } = null!;
 
         public string servicio { get; set; } = null!;
+        public int idservicio { get; set; }
     }
 }

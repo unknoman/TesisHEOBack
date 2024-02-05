@@ -81,6 +81,9 @@ namespace TesisHEOBack.Controllers
 
 
 
+
+
+
         [HttpGet]
         [Route("obtenerdatosTecnicos")]
         public List<EstadisticasDTO> GetDatosTecnicos(DateTime fechaDesde, DateTime fechaHasta)
@@ -96,6 +99,31 @@ namespace TesisHEOBack.Controllers
                     .Select(group => new EstadisticasDTO
                     {
                         name = group.Key.Nombret + " " + group.Key.Apellidot + " ID:" + group.Key.Idtecnico, 
+                        value = group.Count() // Contar la cantidad de servicios técnicos para el técnico
+                    })
+                    .ToList();
+
+                return stats;
+            }
+        }
+
+
+
+        [HttpGet]
+        [Route("obtenerdatosTecnicosR")]
+        public List<EstadisticasDTO> GetDatosTecnicosR(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+                fechaDesde = fechaDesde.Date;
+                fechaHasta = fechaHasta.Date.AddDays(1); // Asegurar que incluya todo el último día
+
+                var stats = db.Serviciotecnicos
+                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta && p.Idtiposerviciot == 1) // Filtrar por fechas
+                    .GroupBy(p => new { p.Idtecnico, p.IdtecnicoNavigation.Nombret, p.IdtecnicoNavigation.Apellidot })
+                    .Select(group => new EstadisticasDTO
+                    {
+                        name = group.Key.Nombret + " " + group.Key.Apellidot + " ID:" + group.Key.Idtecnico,
                         value = group.Count() // Contar la cantidad de servicios técnicos para el técnico
                     })
                     .ToList();

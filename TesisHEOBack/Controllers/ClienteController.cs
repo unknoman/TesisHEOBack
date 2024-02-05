@@ -35,8 +35,29 @@ namespace TesisHEOBack.Controllers
 
         }
 
+        [HttpGet]
+        [Route("ClientesListR")]
+        public dynamic listarClientesR(int numero = 0, int numero2 = 0, string? dato = null)
+        {
 
-        [HttpPut]
+
+            /*      using (TesisHeoContext db = new TesisHeoContext())   Consulta de icollect 
+                {
+                    var clientes = db.Clientes.Include(c => c.Direccions).Select(c => new {
+                      c.Nombre,
+                      c.Telefono,
+                      Direcciones = c.Direccions.Select(d => d.Direccion1)
+                    }).ToList();
+                    return clientes;
+                } 
+            }  */
+
+            return ClienteNegocio.listarClientesR(numero, numero2, dato);
+
+        }
+
+
+       [HttpPut]
         [Route("ClientesCrear")]
         public dynamic crearCliente(clienteCrearDTO clientec)
         {

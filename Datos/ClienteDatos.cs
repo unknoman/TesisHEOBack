@@ -405,7 +405,8 @@ namespace Datos
                     Telefono = c.Telefono,
                     Idestadoc = c.Idestadoc,
                     estadoCliente = c.IdestadocNavigation.Estadocliente1,
-                    servicio = c.IdservicioNavigation.Servicio1
+                    servicio = c.IdservicioNavigation.Servicio1,
+                    idservicio = c.IdservicioNavigation.Idservicio
                 }).Where(c => c.Idestadoc != 1001);
 
                 if (!string.IsNullOrEmpty(dato))
@@ -433,8 +434,61 @@ namespace Datos
 
                 return query.ToList();
             }
-        } 
+        }
 
+
+
+        public static List<ClienteDTO> listarClientesR(int numero = 0, int numero2 = 0, string dato = "")
+        {
+            using (TesisHeoContext db = new TesisHeoContext())
+            {
+
+                var query = db.Clientes.Where(c => c.Idestadoc != 1001);
+                query = query.Where(c => c.Pagos.Count == 0);
+
+                var result = query.Select(c => new ClienteDTO
+                {
+                    Idcliente = c.Idcliente,
+                    Nombre = c.Nombre,
+                    Apellido = c.Apellido,
+                    Dnic = c.Dnic,
+                    Direccionc = c.Direccionc,
+                    Telefono = c.Telefono,
+                    Idestadoc = c.Idestadoc,
+                    estadoCliente = c.IdestadocNavigation.Estadocliente1,
+                    servicio = c.IdservicioNavigation.Servicio1,
+                    idservicio = c.IdservicioNavigation.Idservicio
+
+                });
+
+          
+
+                if (!string.IsNullOrEmpty(dato))
+                {
+                    switch (numero)
+                    {
+                        case 1:
+                            result = result.Where(c => c.Nombre.StartsWith(dato));
+                            break;
+                        case 2:
+                            result = result.Where(c => c.Apellido.StartsWith(dato));
+                            break;
+                        case 3:
+                            result = result.Where(c => c.Dnic.StartsWith(dato));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if (numero2 > 0)
+                {
+                    result = result.Where(c => c.Idestadoc == numero2);
+                }
+
+                return result.ToList();
+            }
+        }
 
         public static dynamic crearCliente(clienteCrearDTO clientec)
         {

@@ -18,6 +18,12 @@ namespace Negocio
             return ClienteDatos.listarClientes(numero, numero2, dato);
         }
 
+
+        public static List<ClienteDTO> listarClientesR(int numero = 0, int numero2 = 0, string dato = "")
+        {
+            return ClienteDatos.listarClientesR(numero, numero2, dato);
+        }
+     
         public static dynamic modificarCliente(clienteCrearDTO clientec)
         {
             return ClienteDatos.modificarCliente(clientec);
