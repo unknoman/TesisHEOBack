@@ -150,6 +150,17 @@ namespace Datos
             return true;
         }
 
+/*
+        public bool getEstadoServicioT(int id)
+        {
+
+            Serviciotecnico servicioTe = _dbContexto.Serviciotecnicos.Where(s => s.Idproblemat == id).FirstOrDefault();
+            if (servicioTe.Idestadoservicio == 3)
+                return false;
+            return true;
+        }
+ */
+
         public bool eliminarServicioT(int id, int tipo)
         {
             Serviciotecnico servicioTe = _dbContexto.Serviciotecnicos.Where(i => i.Idproblemat == id).FirstOrDefault();

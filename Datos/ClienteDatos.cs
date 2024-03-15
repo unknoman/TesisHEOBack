@@ -581,7 +581,7 @@ namespace Datos
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                return db.Clientes.Count(c => c.Dnic == clientec.Dnic);
+                return db.Clientes.Where(c=> c.Idestadoc != 1001).Count(c => c.Dnic == clientec.Dnic);
             }
         }
 
