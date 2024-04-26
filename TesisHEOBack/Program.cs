@@ -11,12 +11,7 @@ using TesisHEOBack.Modelos;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<TesisHeoContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
-});
 
 
 
@@ -54,6 +49,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<ServicioTNegocio>();
 builder.Services.AddScoped<ServicioTDatos>();
 
+
+// Add services to the container.
+builder.Services.AddDbContext<TesisHeoContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("conexion"));
+});
 
 var app = builder.Build();
 
