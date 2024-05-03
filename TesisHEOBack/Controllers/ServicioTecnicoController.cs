@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Server.IIS.Core;
 using Modelos.Modelos;
 using Modelos.ModelosDTO;
 using Negocio;
+using TesisHEOBack.Modelos;
 
 namespace TesisHEOBack.Controllers
 {
@@ -13,10 +14,35 @@ namespace TesisHEOBack.Controllers
     public class ServicioTecnicoController : Controller
     {
         private readonly ServicioTNegocio _ServicioTNegocio;
+        private readonly TesisHeoContext _db;
 
-        public ServicioTecnicoController(ServicioTNegocio servicioTNegocio) {
+        public ServicioTecnicoController(ServicioTNegocio servicioTNegocio, TesisHeoContext db) {
         _ServicioTNegocio = servicioTNegocio;
+            _db = db;
         }
+
+        [HttpGet]
+        [Route("ServicioTI")]
+        public dynamic listarServicioTI(int TI, int tipo)
+        {
+            List<ServicioTPlanilla> planillaList = new List<ServicioTPlanilla>();
+
+            planillaList = _db.Serviciotecnicos.Where(c => c.Idtecnico == TI && c.Idtiposerviciot == tipo && c.Idestadoservicio == 1).Select(s => new ServicioTPlanilla
+            {
+                idCaso = s.Idproblemat,
+                descripcion = s.Descripcionserviciot,
+                nombreC = s.IdclienteNavigation.Nombre,
+                apellidoC = s.IdclienteNavigation.Apellido,
+                direccion = s.IdclienteNavigation.Direccionc,
+                telefono = s.IdclienteNavigation.Telefono,
+                tecnico = s.IdtecnicoNavigation.Nombret + s.IdtecnicoNavigation.Apellidot
+
+
+            })
+            .ToList();
+            return planillaList;
+        }
+
 
         [HttpGet]
         [Route("listarServicioT")]

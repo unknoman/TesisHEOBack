@@ -23,7 +23,7 @@ namespace Datos
                     Bajada = c.Bajada,
                     Precio = c.Precio
 
-                }).Where(p => p.Precio != 0).ToList();
+                }).Where(p => p.Precio != 0).OrderByDescending(c => c.Idservicio).ToList();
                 return serviciosList;
             }
         }

@@ -53,7 +53,7 @@ namespace TesisHEOBack.Controllers
             {
                 UsuarioNegocio.eliminarUsuario(id);
                 respuesta1.estadoRespuesta = true;
-                respuesta1.mensajeRespuesta = "Se elimino correctamente el usuario";
+                respuesta1.mensajeRespuesta = "El usuario fue eliminado correctamente";
                 return respuesta1;
 
             } catch (ExcepcionDatos ex)
@@ -73,7 +73,7 @@ namespace TesisHEOBack.Controllers
                 {
                     UsuarioNegocio.actualizarUsuario(usuario);
                     respuesta1.estadoRespuesta = true;
-                    respuesta1.mensajeRespuesta = "Se actualizo correctamente el usuario";
+                    respuesta1.mensajeRespuesta = "El usuario fue actualizado correctamente";
                     return respuesta1;
 
                 }

@@ -114,7 +114,7 @@ namespace Datos
                             else
                                 return false;
                         }
-                        throw new ExcepcionDatos("No se encontro el usuario");
+                        throw new ExcepcionDatos("No se encontró el usuario");
 
                     } else
                     {

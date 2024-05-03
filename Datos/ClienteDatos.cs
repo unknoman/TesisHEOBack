@@ -118,7 +118,7 @@ namespace Datos
                     query = query.Where(c => c.Idestadoc == numero2);
                 }
 
-                return query.ToList();
+                return query.OrderByDescending(c => c.Idcliente).ToList();
             }
         }
 

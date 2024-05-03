@@ -62,7 +62,7 @@ namespace Datos
             using (TesisHeoContext db = new TesisHeoContext())
             {
                 List<tecnicoDTO> tecnicos = new List<tecnicoDTO>();
-                IQueryable<Tecnico> query = db.Tecnicos.Where(c => c.Nombret.StartsWith(dato));
+                IQueryable<Tecnico> query = db.Tecnicos.Where(c => c.Nombret.StartsWith(dato) || c.Apellidot.StartsWith(dato) || c.Nombret.StartsWith(dato));
 
                 if (numero == 0)
                 {
@@ -84,7 +84,7 @@ namespace Datos
                     Apellidot = c.Apellidot,
                     Casosnum = c.Casosnum,
                     Telefonot = c.Telefonot
-                })
+                }).OrderByDescending(t => t.Idtecnico == 0 ? int.MaxValue : t.Idtecnico) // Ordena primero los elementos con Idtecnico igual a 0
                 .ToList();
 
                 return tecnicos;
