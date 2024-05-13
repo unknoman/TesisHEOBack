@@ -23,7 +23,7 @@ namespace TesisHEOBack.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         [Route("crearPlan")]
         public dynamic crearPlan(servicioDTO plan)
         {

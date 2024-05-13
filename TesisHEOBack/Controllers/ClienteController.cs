@@ -57,7 +57,7 @@ namespace TesisHEOBack.Controllers
         }
 
 
-       [HttpPut]
+       [HttpPost]
         [Route("ClientesCrear")]
         public dynamic crearCliente(clienteCrearDTO clientec)
         {

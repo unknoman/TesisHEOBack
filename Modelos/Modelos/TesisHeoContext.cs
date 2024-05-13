@@ -41,7 +41,7 @@ public partial class TesisHeoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-    => optionsBuilder.UseSqlServer("Server=localhost;database=tesisHEO2; Trusted_Connection=true;TrustServerCertificate=True");
+    => optionsBuilder.UseSqlServer("Server=localhost;database=tesisHEO3; Trusted_Connection=true;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,6 +60,9 @@ public partial class TesisHeoContext : DbContext
                 .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("DIRECCIONC");
+            entity.Property(e => e.activo)
+             .HasColumnName("ACTIVO")
+           .HasDefaultValue(true);
             entity.Property(e => e.Dnic)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -211,6 +214,9 @@ public partial class TesisHeoContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("SERVICIO");
+            entity.Property(e => e.activo)
+             .HasColumnName("ACTIVO")
+            .HasDefaultValue(true);
             entity.Property(e => e.Subida)
                 .HasMaxLength(200)
                 .IsUnicode(false)
@@ -235,6 +241,9 @@ public partial class TesisHeoContext : DbContext
             entity.Property(e => e.Idestadoservicio).HasColumnName("IDESTADOSERVICIO");
             entity.Property(e => e.Idtecnico).HasColumnName("IDTECNICO");
             entity.Property(e => e.Idtiposerviciot).HasColumnName("IDTIPOSERVICIOT");
+            entity.Property(e => e.activo)
+            .HasColumnName("ACTIVO")
+            .HasDefaultValue(true);
 
             entity.HasOne(d => d.IdclienteNavigation).WithMany(p => p.Serviciotecnicos)
                 .HasForeignKey(d => d.Idcliente)
@@ -273,6 +282,9 @@ public partial class TesisHeoContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("NOMBRET");
+            entity.Property(e => e.activo)
+            .HasColumnName("ACTIVO")
+           .HasDefaultValue(true);
             entity.Property(e => e.Telefonot)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -313,6 +325,7 @@ public partial class TesisHeoContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("USUARIO");
+
 
             entity.HasOne(d => d.IdrolNavigation).WithMany(p => p.Usuarios)
                 .HasForeignKey(d => d.Idrol)

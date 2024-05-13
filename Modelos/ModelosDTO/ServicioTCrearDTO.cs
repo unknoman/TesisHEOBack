@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +13,18 @@ namespace Modelos.ModelosDTO
             public int? idcaso { get; set; }
             public int Idtecnico { get; set; }
 
-            public int Idcliente { get; set; }
+        [Required(ErrorMessage = "El campo es obligatorio.")]
+        public int Idcliente { get; set; }
 
             public int Idestadoservicio { get; set; }
 
-            public int Idtiposerviciot { get; set; }
+        [Required(ErrorMessage = "El campo es obligatorio.")]
+        public int Idtiposerviciot { get; set; }
 
-            public string? Descripcionserviciot { get; set; }
+
+        [Required(ErrorMessage = "El campo es obligatorio.")]
+        [MaxLength(51, ErrorMessage = "El campo no puede tener más de 50 caracteres.")]
+        public string? Descripcionserviciot { get; set; }
 
             public DateTime Fechainicio { get; set; }
 

@@ -23,7 +23,7 @@ namespace TesisHEOBack.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         [Route("registrarUsuario")]
         public dynamic registrarUsuario(UsuarioDTO usuario)
         {

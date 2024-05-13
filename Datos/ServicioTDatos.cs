@@ -26,7 +26,7 @@ namespace Datos
         public List<ServicioTDTO> getServicioT(int estado)
         {
             List<ServicioTDTO> listaServicio = new List<ServicioTDTO>();
-            listaServicio = _dbContexto.Serviciotecnicos.Select(x => new ServicioTDTO()
+            listaServicio = _dbContexto.Serviciotecnicos.Where(s => s.activo != false).Select(x => new ServicioTDTO()
             {
                 Idproblemat = x.Idproblemat,
                 Idtiposerviciot = x.Idtiposerviciot,
@@ -41,7 +41,7 @@ namespace Datos
                 // Pendiente o solucionado
                 Idestadoservicio = x.Idestadoservicio,
 
-            }).Where(x => x.Idestadoservicio == estado & x.Idtiposerviciot == 2).Where(s => s.Idestadoservicio != 3).ToList();
+            }).Where(x => x.Idestadoservicio == estado & x.Idtiposerviciot == 2).ToList();
 
             return listaServicio;
         }
@@ -50,7 +50,7 @@ namespace Datos
         public List<ServicioTDTO> getServicioTR(int estado)
         {
             List<ServicioTDTO> listaServicio = new List<ServicioTDTO>();
-            listaServicio = _dbContexto.Serviciotecnicos.Select(x => new ServicioTDTO()
+            listaServicio = _dbContexto.Serviciotecnicos.Where(s => s.activo != false).Select(x => new ServicioTDTO()
             {
                 Idproblemat = x.Idproblemat,
                 Idtiposerviciot = x.Idtiposerviciot,
@@ -65,7 +65,7 @@ namespace Datos
                 // Pendiente o solucionado
                 Idestadoservicio = x.Idestadoservicio,
 
-            }).Where(x => x.Idestadoservicio == estado & x.Idtiposerviciot == 1).Where(s => s.Idestadoservicio != 3).ToList();
+            }).Where(x => x.Idestadoservicio == estado & x.Idtiposerviciot == 1).ToList();
 
             return listaServicio;
         }
@@ -163,11 +163,11 @@ namespace Datos
 
         public bool eliminarServicioT(int id, int tipo)
         {
-            Serviciotecnico servicioTe = _dbContexto.Serviciotecnicos.Where(i => i.Idproblemat == id).FirstOrDefault();
-            if(servicioTe.Idestadoservicio == 1)
+            Serviciotecnico? servicioTe = _dbContexto.Serviciotecnicos.Where(i => i.Idproblemat == id).FirstOrDefault();
+            if(servicioTe?.Idestadoservicio == 1)
             {
                 var tecnico = _dbContexto.Tecnicos.Where(i => i.Idtecnico == servicioTe.Idtecnico).FirstOrDefault();
-                if(tecnico.Casosnum > 0)
+                if(tecnico?.Casosnum > 0)
                 {
                     tecnico.Casosnum = tecnico.Casosnum - 1;
                     _dbContexto.Update(tecnico);
@@ -187,7 +187,7 @@ namespace Datos
             }
             if(servicioTe != null)
             {
-                servicioTe.Idestadoservicio = 3;
+                servicioTe.activo = false;
                 _dbContexto.Update(servicioTe);
             }
              

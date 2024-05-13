@@ -15,7 +15,7 @@ namespace Datos
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                List<servicioDTO> serviciosList = db.Servicios.Select(c => new servicioDTO
+                List<servicioDTO> serviciosList = db.Servicios.Where(p => p.activo != false).Select(c => new servicioDTO
                 {
                     Idservicio = c.Idservicio,
                     Servicio1 = c.Servicio1,
@@ -23,7 +23,7 @@ namespace Datos
                     Bajada = c.Bajada,
                     Precio = c.Precio
 
-                }).Where(p => p.Precio != 0).OrderByDescending(c => c.Idservicio).ToList();
+                }).OrderByDescending(c => c.Idservicio).ToList();
                 return serviciosList;
             }
         }
@@ -37,7 +37,7 @@ namespace Datos
                 if (servicio != null && servicio.Clientes.Count < 1)
                 {
 
-                        servicio.Precio = 0;
+                        servicio.activo = false;
                         db.Update(servicio);
                         db.SaveChanges();
                         return true;

@@ -22,13 +22,11 @@ namespace Datos
         }
 
 
-        public static List<clienteSimpleListDTO> listarClienteSimple(int estadoInstalado)
+        public static List<clienteSimpleListDTO> listarClienteSimple(int estado)
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                List<clienteSimpleListDTO> lista = new List<clienteSimpleListDTO>();
-
-                lista = db.Clientes.Where(c => c.Instalado == estadoInstalado && c.Idestadoc != 1001).Select(c => new clienteSimpleListDTO
+                return db.Clientes.Where(c => c.Instalado == estado && c.activo != false).Select(c => new clienteSimpleListDTO
                 {
                     Idcliente = c.Idcliente,
                     Nombre = c.Nombre,
@@ -37,7 +35,7 @@ namespace Datos
                     Instalado = c.Instalado,
                     Dnic = c.Dnic
                 }).ToList();
-                return lista;
+  
             }
         }
 
@@ -56,7 +54,7 @@ namespace Datos
 
                     foreach (Pago pago in cliente.Pagos)
                     {
-                        // Verificar si el pago está vencido
+                       
                         if (pago.Fechavencimiento < pago.Fechapagado || pago.Fechapagado == null && pago.Idestadop != 3)
                         {
                             tienePagosVencidos = true;
@@ -64,14 +62,14 @@ namespace Datos
                         }
                     }
 
-                    // Actualizar el estado del cliente si tiene pagos vencidos
+                    
                     if (tienePagosVencidos)
                     {
                         cliente.Idestadoc = 2;
                     }
                 }
 
-                // Guardar los cambios en la base de datos
+               
                 db.SaveChanges();
             }
         }
@@ -81,7 +79,7 @@ namespace Datos
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                var query = db.Clientes.Select(c => new ClienteDTO
+                var query = db.Clientes.Where(c => c.activo != false).Select(c => new ClienteDTO
                 {
                     Idcliente = c.Idcliente,
                     Nombre = c.Nombre,
@@ -93,7 +91,7 @@ namespace Datos
                     estadoCliente = c.IdestadocNavigation.Estadocliente1,
                     servicio = c.IdservicioNavigation.Servicio1,
                     idservicio = c.IdservicioNavigation.Idservicio
-                }).Where(c => c.Idestadoc != 1001);
+                });
 
                 if (!string.IsNullOrEmpty(dato))
                 {
@@ -129,7 +127,7 @@ namespace Datos
             using (TesisHeoContext db = new TesisHeoContext())
             {
 
-                var query = db.Clientes.Where(c => c.Idestadoc != 1001);
+                var query = db.Clientes.Where(c => c.activo != false);
                 query = query.Where(c => c.Pagos.Count == 0);
 
                 var result = query.Select(c => new ClienteDTO
@@ -267,7 +265,7 @@ namespace Datos
         {
             using (TesisHeoContext db = new TesisHeoContext())
             {
-                return db.Clientes.Where(c=> c.Idestadoc != 1001).Count(c => c.Dnic == clientec.Dnic);
+                return db.Clientes.Where(c=> c.activo != false).Count(c => c.Dnic == clientec.Dnic);
             }
         }
 
@@ -281,7 +279,7 @@ namespace Datos
                     bool puedeEliminar = cliente.Pagos.All(p => p.Idestadop == 2);
                     if (puedeEliminar)
                     {
-                        cliente.Idestadoc = 1001;
+                        cliente.activo = false;
                         db.Update(cliente);
                         db.SaveChanges();
                         return true;

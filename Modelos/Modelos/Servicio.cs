@@ -16,4 +16,6 @@ public partial class Servicio
     public string Bajada { get; set; } = null!;
 
     public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
+
+    public bool activo { get; set; }
 }

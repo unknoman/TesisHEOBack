@@ -12,7 +12,7 @@ using TesisHEOBack.Modelos;
 using Modelos.ModelosDTO;
 
 
-// Esta todo mal estructurado pero como lo arranqué asi y por poco tiempo lo continuare de esta forma.
+
 namespace Datos
 {
     public class UsuariosDatos

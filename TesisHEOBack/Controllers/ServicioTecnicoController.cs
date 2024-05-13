@@ -27,7 +27,7 @@ namespace TesisHEOBack.Controllers
         {
             List<ServicioTPlanilla> planillaList = new List<ServicioTPlanilla>();
 
-            planillaList = _db.Serviciotecnicos.Where(c => c.Idtecnico == TI && c.Idtiposerviciot == tipo && c.Idestadoservicio == 1).Select(s => new ServicioTPlanilla
+            planillaList = _db.Serviciotecnicos.Where(c => c.Idtecnico == TI && c.Idtiposerviciot == tipo && c.Idestadoservicio == 1 && c.activo != false).Select(s => new ServicioTPlanilla
             {
                 idCaso = s.Idproblemat,
                 descripcion = s.Descripcionserviciot,
@@ -81,7 +81,7 @@ namespace TesisHEOBack.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         [Route("registrarCaso")]
         public async Task<dynamic> registrarCaso(ServicioTCrearDTO servicio)
         {

@@ -61,7 +61,7 @@ namespace TesisHEOBack.Controllers
 
 
 
-        [HttpPut]
+        [HttpPost]
         [Route("crearTecnico")]
         public dynamic crearTecnico(tecnicoDTO tecnico)
         {

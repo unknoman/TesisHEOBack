@@ -46,7 +46,7 @@ namespace Datos
                 if (id != 0)
                 {
                     var tecnico = db.Tecnicos.Include(c => c.Serviciotecnicos).FirstOrDefault(c => c.Idtecnico == id);
-                    tecnico.Idestado = 3;
+                    tecnico.activo = false;
                     db.Update(tecnico);
                    int valor = db.SaveChanges();
                     if(valor >0)
@@ -66,7 +66,7 @@ namespace Datos
 
                 if (numero == 0)
                 {
-                    query = query.Where(c=> c.Idestado != 3);
+                    query = query.Where(c=> c.activo != false);
                 }
                 else if (numero == 1)
                 {
@@ -99,7 +99,7 @@ namespace Datos
                 List<tecnicoDTO> tecnicos = new List<tecnicoDTO>();
 
 
-                tecnicos = db.Tecnicos.Where(c => c.Casosnum < 5 && c.Idestado != 3 && c.Idtecnico != 0).Select(c => new tecnicoDTO
+                tecnicos = db.Tecnicos.Where(c => c.Casosnum < 5 && c.activo != false && c.Idtecnico != 0).Select(c => new tecnicoDTO
                 {
                     Idtecnico = c.Idtecnico,
                     Nombret = c.Nombret,

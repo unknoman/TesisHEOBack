@@ -26,4 +26,6 @@ public partial class Serviciotecnico
     public virtual Tecnico? IdtecnicoNavigation { get; set; }
 
     public virtual Tiposervicio IdtiposerviciotNavigation { get; set; } = null!;
+
+    public bool activo { get; set; }
 }

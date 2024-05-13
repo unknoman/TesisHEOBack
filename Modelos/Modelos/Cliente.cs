@@ -32,4 +32,5 @@ public partial class Cliente
     public virtual ICollection<Pago> Pagos { get; set; } = new List<Pago>();
 
     public virtual ICollection<Serviciotecnico> Serviciotecnicos { get; set; } = new List<Serviciotecnico>();
+    public bool activo { get; set; }
 }

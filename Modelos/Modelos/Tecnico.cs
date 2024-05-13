@@ -20,4 +20,6 @@ public partial class Tecnico
     public virtual Estadot IdestadoNavigation { get; set; } = null!;
 
     public virtual ICollection<Serviciotecnico> Serviciotecnicos { get; set; } = new List<Serviciotecnico>();
+
+    public bool activo { get; set; }
 }
