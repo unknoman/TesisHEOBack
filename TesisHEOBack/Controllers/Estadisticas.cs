@@ -54,7 +54,7 @@ namespace TesisHEOBack.Controllers
             using (TesisHeoContext db = new TesisHeoContext())
             {
                 fechaDesde = fechaDesde.Date;
-                fechaHasta = fechaHasta.Date.AddDays(1).AddTicks(-1); // Asegurar que incluya todo el último día
+                fechaHasta = fechaHasta.Date.AddDays(1).AddTicks(-1); 
 
                
                 /* var stats =  db.Pagos
@@ -70,8 +70,8 @@ namespace TesisHEOBack.Controllers
                 var stats = db.Servicios.Where(servicio => servicio.Precio != 0)
             .Select(servicio => new EstadisticasDTO
             {
-                name = servicio.Servicio1, // Nombre del servicio
-                value = servicio.Clientes.Count(cliente => cliente.Idestadoc != 1001) // Cantidad de clientes para el servicio
+                name = servicio.Servicio1, 
+                value = servicio.Clientes.Count(cliente => cliente.activo != false) 
             })
             .ToList();
 
@@ -91,15 +91,15 @@ namespace TesisHEOBack.Controllers
             using (TesisHeoContext db = new TesisHeoContext())
             {
                 fechaDesde = fechaDesde.Date;
-                fechaHasta = fechaHasta.Date.AddDays(1); // Asegurar que incluya todo el último día
+                fechaHasta = fechaHasta.Date.AddDays(1); 
 
                 var stats = db.Serviciotecnicos
-                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta && p.Idtiposerviciot == 2) // Filtrar por fechas
+                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta && p.Idtiposerviciot == 2)
                     .GroupBy(p => new { p.Idtecnico, p.IdtecnicoNavigation.Nombret, p.IdtecnicoNavigation.Apellidot })
                     .Select(group => new EstadisticasDTO
                     {
                         name = group.Key.Nombret + " " + group.Key.Apellidot + " ID:" + group.Key.Idtecnico, 
-                        value = group.Count() // Contar la cantidad de servicios técnicos para el técnico
+                        value = group.Count() 
                     })
                     .ToList();
 
@@ -116,15 +116,15 @@ namespace TesisHEOBack.Controllers
             using (TesisHeoContext db = new TesisHeoContext())
             {
                 fechaDesde = fechaDesde.Date;
-                fechaHasta = fechaHasta.Date.AddDays(1); // Asegurar que incluya todo el último día
+                fechaHasta = fechaHasta.Date.AddDays(1); 
 
                 var stats = db.Serviciotecnicos
-                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta && p.Idtiposerviciot == 1) // Filtrar por fechas
+                    .Where(p => p.Fechainicio >= fechaDesde && p.Fechainicio <= fechaHasta && p.Idtiposerviciot == 1)
                     .GroupBy(p => new { p.Idtecnico, p.IdtecnicoNavigation.Nombret, p.IdtecnicoNavigation.Apellidot })
                     .Select(group => new EstadisticasDTO
                     {
                         name = group.Key.Nombret + " " + group.Key.Apellidot + " ID:" + group.Key.Idtecnico,
-                        value = group.Count() // Contar la cantidad de servicios técnicos para el técnico
+                        value = group.Count() 
                     })
                     .ToList();
 
@@ -138,7 +138,7 @@ namespace TesisHEOBack.Controllers
         public List<EstadisticasDTO> ObtenerEstadisticasPagos(DateTime fechaDesde, DateTime fechaHasta)
         {
             fechaDesde = fechaDesde.Date;
-            fechaHasta = fechaHasta.Date.AddDays(1); // Asegurar que incluya todo el último día
+            fechaHasta = fechaHasta.Date.AddDays(1); 
             using (TesisHeoContext db = new TesisHeoContext())
             {
                 var estadisticas = db.Pagos
